@@ -1,0 +1,61 @@
+BitVector.java: 
+	set: 5.0/5.0
+	clear: 5.0/5.0
+	toggle: 5.0/5.0
+	isSet: 5.0/5.0
+	isClear: 5.0/5.0
+	onesCount: 5.0/5.0
+	zerosCount: 5.0/5.0
+	size: 5.0/5.0
+	Perfect!
+Operations.java: 
+<<<<<<< HEAD
+	getShort: 2.5/5.0
+		[fail] Failed test case for method getShort. Arguments [-1091577122, 1]; Expected return value: 48879; Actual: -16657
+		[fail] Failed test case for method getShort. Arguments [-559874102, 0]; Expected return value: 65482; Actual: -8544
+	setByte: 5.0/5.0
+	pack: 0.0/5.0
+		[fail] Failed test case for method pack. Arguments [35175, 69, 35]; Expected return value: -1989720797; Actual: 0
+		[fail] Failed test case for method pack. Arguments [57007, 145, 131]; Expected return value: -558919293; Actual: 0
+		[fail] Failed test case for method pack. Arguments [48879, 202, 254]; Expected return value: -1091581186; Actual: 0
+		[fail] Failed test case for method pack. Arguments [48623, 192, 3]; Expected return value: -1108361213; Actual: 0
+		[fail] Failed test case for method pack. Arguments [68, 255, 151]; Expected return value: 4521879; Actual: 0
+		(-0.0) Violations:
+			Method not implemented
+	bitRange: 0.0/5.0
+		[fail] Failed test case for method bitRange. Arguments [-858993460, 15, 9]; Expected return value: 409; Actual: 0
+		[fail] Failed test case for method bitRange. Arguments [2147483647, 0, 31]; Expected return value: 2147483647; Actual: 0
+		[fail] Failed test case for method bitRange. Arguments [22161, 0, 8]; Expected return value: 145; Actual: 0
+		[fail] Failed test case for method bitRange. Arguments [4552329, 8, 8]; Expected return value: 118; Actual: 0
+		(-0.0) Violations:
+			Method not implemented
+	xnor: 5.0/5.0
+	multipleOf2: 3.0/3.0
+	multipleOf8: 3.0/3.0
+	powerOf2: 2.5/4.0
+		[fail] Failed test case for method powerOf2. Arguments [16384]; Expected return value: true; Actual: false
+		[fail] Failed test case for method powerOf2. Arguments [0]; Expected return value: false; Actual: true
+		[fail] Failed test case for method powerOf2. Arguments [4194304]; Expected return value: true; Actual: false
+=======
+	getShort: 5.0/5.0
+	setByte: 5.0/5.0
+	pack: 5.0/5.0
+	bitRange: 5.0/5.0
+	xnor: 5.0/5.0
+	multipleOf2: 3.0/3.0
+	multipleOf8: 3.0/3.0
+	powerOf2: 4.0/4.0
+	Perfect!
+>>>>>>> 53a8aa49969eddd6ee250af42b29f4b457f7a035
+Bases.java: 
+	binaryStringToInt: 5.0/5.0
+	decimalStringToInt: 5.0/5.0
+	hexStringToInt: 5.0/5.0
+	intToOctalString: 5.0/5.0
+	binaryStringToHexString: 5.0/5.0
+	Perfect!
+<<<<<<< HEAD
+Final Grade: 86.0/100.0
+=======
+Final Grade: 100.0/100.0
+>>>>>>> 53a8aa49969eddd6ee250af42b29f4b457f7a035
