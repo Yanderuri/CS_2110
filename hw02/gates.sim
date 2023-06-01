@@ -20,7 +20,7 @@
         {
           "name": "com.ra4king.circuitsim.gui.peers.wiring.ConstantPeer",
           "x": 34,
-          "y": 10,
+          "y": 12,
           "properties": {
             "Label location": "EAST",
             "Label": "Power",
@@ -43,8 +43,8 @@
         },
         {
           "name": "com.ra4king.circuitsim.gui.peers.wiring.PinPeer",
-          "x": 22,
-          "y": 21,
+          "x": 31,
+          "y": 19,
           "properties": {
             "Label location": "WEST",
             "Label": "IN",
@@ -55,7 +55,7 @@
         },
         {
           "name": "com.ra4king.circuitsim.gui.peers.wiring.PinPeer",
-          "x": 43,
+          "x": 35,
           "y": 19,
           "properties": {
             "Label location": "EAST",
@@ -68,7 +68,7 @@
         {
           "name": "com.ra4king.circuitsim.gui.peers.wiring.ConstantPeer",
           "x": 34,
-          "y": 30,
+          "y": 26,
           "properties": {
             "Label location": "EAST",
             "Label": "Ground",
@@ -81,39 +81,15 @@
       ],
       "wires": [
         {
-          "x": 24,
-          "y": 22,
-          "length": 5,
-          "isHorizontal": true
-        },
-        {
-          "x": 29,
+          "x": 33,
           "y": 16,
           "length": 4,
-          "isHorizontal": true
-        },
-        {
-          "x": 29,
-          "y": 16,
-          "length": 6,
           "isHorizontal": false
         },
         {
-          "x": 29,
-          "y": 22,
-          "length": 2,
-          "isHorizontal": false
-        },
-        {
-          "x": 29,
-          "y": 24,
+          "x": 33,
+          "y": 20,
           "length": 4,
-          "isHorizontal": true
-        },
-        {
-          "x": 35,
-          "y": 12,
-          "length": 2,
           "isHorizontal": false
         },
         {
@@ -126,18 +102,6 @@
           "x": 35,
           "y": 20,
           "length": 2,
-          "isHorizontal": false
-        },
-        {
-          "x": 35,
-          "y": 20,
-          "length": 8,
-          "isHorizontal": true
-        },
-        {
-          "x": 35,
-          "y": 26,
-          "length": 4,
           "isHorizontal": false
         }
       ]
@@ -1374,6 +1338,7 @@
     "NWQwOGM0M2QxMmYwYTRiYjNiNjQ4ZjMyM2M0ZmUwZmZmMzNhNWUzZDNhODQ5YjBlZDMwNWZiYTFhMzc2MTU4MAk5YzhjOTU2ZjUzOTQzNWJhNzdlM2ZiYmZhMTFmOGU0Mzc5M2JiODQ1YjQ5ODVjNzAzNGZlYzM4ZDJlYzM4YjRlCTE2ODUzMzczNTQwNDEJNWFkNzliYzk5NjNiZDAzY2Q3MTQ2NTkyNGIzZDI5YzZjYjQ2ODc1MjczN2Q3N2IzYjA1NWRlZTcyOThlN2ZlZA\u003d\u003d",
     "OWM4Yzk1NmY1Mzk0MzViYTc3ZTNmYmJmYTExZjhlNDM3OTNiYjg0NWI0OTg1YzcwMzRmZWMzOGQyZWMzOGI0ZQk0NzM5NDE2Y2EwM2ZhMjg0NTQ4MDYxNWZhM2MwOWUyZTgwZDA2YWE0ZDk2MmIwODQwNWE4NGNhNmNmN2EzNDM1CTE2ODUzMzc2NTYwNjAJM2ZkYmQ5M2QzMWI4MDBkOGE3NDVjNmUwNjQzNDk2ZWY5YmZkNzE3NDZlZjg3NjRlMzllY2VjODA5MzdiZTBlZQ\u003d\u003d",
     "NDczOTQxNmNhMDNmYTI4NDU0ODA2MTVmYTNjMDllMmU4MGQwNmFhNGQ5NjJiMDg0MDVhODRjYTZjZjdhMzQzNQk5ODE2MmQ2NTI0MDY2NjA5NWUwYjFkZjczNjRhNTJkMGVlOWMzYjY5NmE2MTYxMTgxMDNkZTYzNDBkYzk0NzgyCTE2ODUzMzc4NDk5MDQJM2ZkYmQ5M2QzMWI4MDBkOGE3NDVjNmUwNjQzNDk2ZWY5YmZkNzE3NDZlZjg3NjRlMzllY2VjODA5MzdiZTBlZQ\u003d\u003d",
-    "OTgxNjJkNjUyNDA2NjYwOTVlMGIxZGY3MzY0YTUyZDBlZTljM2I2OTZhNjE2MTE4MTAzZGU2MzQwZGM5NDc4MgkyMzVkNTMxZGYwNmYzNTQ5OTI5M2RmNmNlOTczODlmNjIzNzMxZjFjOWViMGRjYzdhNDVjYWU4ZGZjZTY5NjZhCTE2ODUzMzc4ODIzNDIJNTQzZjIzOTcxNWM2Mzg5NmVlM2Q2NDlhYWQ2YWZjNjhiM2IxZjIzMzNiYmY0ZjBkMTk3Mjg0YWU0MTk4M2VjYQ\u003d\u003d"
+    "OTgxNjJkNjUyNDA2NjYwOTVlMGIxZGY3MzY0YTUyZDBlZTljM2I2OTZhNjE2MTE4MTAzZGU2MzQwZGM5NDc4MgkyMzVkNTMxZGYwNmYzNTQ5OTI5M2RmNmNlOTczODlmNjIzNzMxZjFjOWViMGRjYzdhNDVjYWU4ZGZjZTY5NjZhCTE2ODUzMzc4ODIzNDIJNTQzZjIzOTcxNWM2Mzg5NmVlM2Q2NDlhYWQ2YWZjNjhiM2IxZjIzMzNiYmY0ZjBkMTk3Mjg0YWU0MTk4M2VjYQ\u003d\u003d",
+    "MjM1ZDUzMWRmMDZmMzU0OTkyOTNkZjZjZTk3Mzg5ZjYyMzczMWYxYzllYjBkY2M3YTQ1Y2FlOGRmY2U2OTY2YQkzZWY1MDJmZDIzMWQ0NjcwN2YwOGYxMmI1NmE1NWU0ZTZhYWVlOGYwYjdlNDA1N2Y1Yjc4MzQ5YjUwMDY2OTU2CTE2ODU1Nzc4Mzk0NzQJYjQ2OGQxYjUyOTRjZjFkOWZhMDdlOWUxYzM5ZmJlNTg2MWY3ZjUwYTY0M2RjZGVkZjcyN2RmYTRmYWRkZmRjYg\u003d\u003d"
   ]
 }
