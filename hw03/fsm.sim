@@ -236,7 +236,7 @@
           "properties": {
             "Negate 1": "No",
             "Label location": "NORTH",
-            "Negate 0": "No",
+            "Negate 0": "Yes",
             "Negate 2": "No",
             "Number of Inputs": "3",
             "Label": "",
@@ -304,17 +304,6 @@
           "properties": {
             "Label location": "NORTH",
             "Label": "S0\u0027",
-            "Direction": "WEST",
-            "Bitsize": "1"
-          }
-        },
-        {
-          "name": "com.ra4king.circuitsim.gui.peers.gates.NotGatePeer",
-          "x": 43,
-          "y": 25,
-          "properties": {
-            "Label location": "NORTH",
-            "Label": "S1\u0027",
             "Direction": "WEST",
             "Bitsize": "1"
           }
@@ -408,7 +397,7 @@
         {
           "x": 30,
           "y": 20,
-          "length": 20,
+          "length": 18,
           "isHorizontal": true
         },
         {
@@ -473,20 +462,32 @@
         },
         {
           "x": 38,
-          "y": 27,
-          "length": 2,
-          "isHorizontal": true
-        },
-        {
-          "x": 38,
           "y": 28,
-          "length": 4,
+          "length": 1,
           "isHorizontal": true
         },
         {
           "x": 38,
           "y": 29,
+          "length": 1,
+          "isHorizontal": true
+        },
+        {
+          "x": 39,
+          "y": 27,
+          "length": 1,
+          "isHorizontal": true
+        },
+        {
+          "x": 39,
+          "y": 28,
           "length": 3,
+          "isHorizontal": true
+        },
+        {
+          "x": 39,
+          "y": 29,
+          "length": 2,
           "isHorizontal": true
         },
         {
@@ -498,7 +499,7 @@
         {
           "x": 40,
           "y": 26,
-          "length": 3,
+          "length": 8,
           "isHorizontal": true
         },
         {
@@ -556,12 +557,6 @@
           "isHorizontal": true
         },
         {
-          "x": 46,
-          "y": 26,
-          "length": 2,
-          "isHorizontal": true
-        },
-        {
           "x": 47,
           "y": 18,
           "length": 12,
@@ -581,27 +576,9 @@
         },
         {
           "x": 48,
-          "y": 22,
-          "length": 2,
-          "isHorizontal": true
-        },
-        {
-          "x": 48,
-          "y": 22,
-          "length": 3,
+          "y": 20,
+          "length": 6,
           "isHorizontal": false
-        },
-        {
-          "x": 48,
-          "y": 25,
-          "length": 1,
-          "isHorizontal": false
-        },
-        {
-          "x": 48,
-          "y": 25,
-          "length": 8,
-          "isHorizontal": true
         },
         {
           "x": 48,
@@ -611,20 +588,14 @@
         },
         {
           "x": 48,
-          "y": 29,
-          "length": 1,
+          "y": 26,
+          "length": 8,
           "isHorizontal": true
         },
         {
-          "x": 50,
-          "y": 20,
-          "length": 2,
-          "isHorizontal": false
-        },
-        {
-          "x": 50,
-          "y": 22,
-          "length": 6,
+          "x": 48,
+          "y": 29,
+          "length": 1,
           "isHorizontal": true
         },
         {
@@ -653,8 +624,8 @@
         },
         {
           "x": 56,
-          "y": 22,
-          "length": 3,
+          "y": 25,
+          "length": 1,
           "isHorizontal": false
         },
         {
@@ -1231,6 +1202,7 @@
     "NjhkMDczNmViY2UxZDAwOTAxNDQwZTZlY2U0ODYyY2ZlNjQxZWZiNTY2MzU3OTJhODUxM2ZjNTA5NzcwYjY1MgllZTlhM2NhYTJmZmRmNTA4ZjdiMmYxZTgxNTVhZmM4OTkwNzlhMjJlMzQwNDdjZDM5NmY0MzRmYjRiYjdlYzkxCTE2ODYyNjQ0NzY2OTQJNjBkZWVkNGU5ZjFlNGRiMjU5MGJkNGJjOTYwMTE4ODMyOTgyNThjNGM2Mzc0NzY1MGI0MjYzNWUyM2JmZWJhYw\u003d\u003d",
     "ZWU5YTNjYWEyZmZkZjUwOGY3YjJmMWU4MTU1YWZjODk5MDc5YTIyZTM0MDQ3Y2QzOTZmNDM0ZmI0YmI3ZWM5MQkzMzI4MzBlODUyNTliYzY2YzhhNDZmZmNmYTZiZjg3ODliZTM0MjFmNDhiYzQ1ZGMyMjRkMjc2NjMwZjA3NzdhCTE2ODYyNjQ1NTc2NzgJZGRjZGNiMzBjNTJjYmIwZTBjMzM3NTIyZjAzZDE2MWJlYjhlYTYxNjFjNDM4OTlmYmQwM2U5N2I2ZmU4MmE0MA\u003d\u003d",
     "MzMyODMwZTg1MjU5YmM2NmM4YTQ2ZmZjZmE2YmY4Nzg5YmUzNDIxZjQ4YmM0NWRjMjI0ZDI3NjYzMGYwNzc3YQllOTRjZGM5MDM1Mzg4MTM5YzNlMTBiNzdlOWZlMDI2ZmZjNmVjYWRhY2RmZTJkZjA2NWUwZWE2NDIxYWQ2MWJhCTE2ODYyNjQ2OTY2MTUJMzdiNDUwY2VmMTI1MWM0NTAzMzk2OTRiNDM1MzNjYzdjODI2NmJkOTY3ZWFhZjAzNjY2MjZiYWU5YjlkZWY3NA\u003d\u003d",
-    "ZTk0Y2RjOTAzNTM4ODEzOWMzZTEwYjc3ZTlmZTAyNmZmYzZlY2FkYWNkZmUyZGYwNjVlMGVhNjQyMWFkNjFiYQljZWZiZTNkYzQ0ZTExMjdlOTdhNmRlNzkzMjM2NmZhM2JhMzUzOTZhMTEwZGIwNmM1NmZhNWE3NDk4NjJhMzBkCTE2ODYyNjQ4Mjc1NjYJYTdlNDdlMjM5MmIyZWM5NzhjOTVhMzZlMTdjNGZmNjQ2YWEyODA5ODBhM2JlOGI5ZTZjNjQwMjgxZmUyZmYwZA\u003d\u003d"
+    "ZTk0Y2RjOTAzNTM4ODEzOWMzZTEwYjc3ZTlmZTAyNmZmYzZlY2FkYWNkZmUyZGYwNjVlMGVhNjQyMWFkNjFiYQljZWZiZTNkYzQ0ZTExMjdlOTdhNmRlNzkzMjM2NmZhM2JhMzUzOTZhMTEwZGIwNmM1NmZhNWE3NDk4NjJhMzBkCTE2ODYyNjQ4Mjc1NjYJYTdlNDdlMjM5MmIyZWM5NzhjOTVhMzZlMTdjNGZmNjQ2YWEyODA5ODBhM2JlOGI5ZTZjNjQwMjgxZmUyZmYwZA\u003d\u003d",
+    "Y2VmYmUzZGM0NGUxMTI3ZTk3YTZkZTc5MzIzNjZmYTNiYTM1Mzk2YTExMGRiMDZjNTZmYTVhNzQ5ODYyYTMwZAliODIyMzg2NTU2ZjY4NjY0MjMyZjcwODU2NDA2OGU4ZjA0MjdmZjJkNzc4ZWM5YTNhM2U2MGJjY2FhOTIzYTE3CTE2ODYzMjgzMzkwMzgJZGUxNDczMTYyYmY4YTZkYTNlNGM3M2ExZWIwNDY4OTg3YmQ0MGE1ZTg1OTY5ZGM2OWUxNTJhMTE4ZDQ1MTQwNA\u003d\u003d"
   ]
 }
