@@ -179,6 +179,17 @@
         },
         {
           "name": "com.ra4king.circuitsim.gui.peers.wiring.Tunnel",
+          "x": 31,
+          "y": 15,
+          "properties": {
+            "Label": "ALUK",
+            "Direction": "EAST",
+            "Width": "4",
+            "Bitsize": "1"
+          }
+        },
+        {
+          "name": "com.ra4king.circuitsim.gui.peers.wiring.Tunnel",
           "x": 107,
           "y": 23,
           "properties": {
@@ -344,14 +355,6 @@
           }
         },
         {
-          "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
-          "x": 5,
-          "y": 5,
-          "properties": {
-            "Text": "Collaborators:  **EDIT ME**"
-          }
-        },
-        {
           "name": "com.ra4king.circuitsim.gui.peers.wiring.Probe",
           "x": 50,
           "y": 35,
@@ -373,6 +376,14 @@
             "Direction": "WEST",
             "Bitsize": "2",
             "Base": "BINARY"
+          }
+        },
+        {
+          "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
+          "x": 5,
+          "y": 3,
+          "properties": {
+            "Text": "Date: 10/06/2023"
           }
         },
         {
@@ -655,17 +666,6 @@
         },
         {
           "name": "com.ra4king.circuitsim.gui.peers.wiring.Tunnel",
-          "x": 30,
-          "y": 15,
-          "properties": {
-            "Label": "OPCODE",
-            "Direction": "EAST",
-            "Width": "5",
-            "Bitsize": "1"
-          }
-        },
-        {
-          "name": "com.ra4king.circuitsim.gui.peers.wiring.Tunnel",
           "x": 88,
           "y": 24,
           "properties": {
@@ -695,6 +695,14 @@
           }
         },
         {
+          "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
+          "x": 5,
+          "y": 5,
+          "properties": {
+            "Text": "Collaborators: Me myself and I"
+          }
+        },
+        {
           "name": "com.ra4king.circuitsim.gui.peers.plexers.MultiplexerPeer",
           "x": 16,
           "y": 35,
@@ -705,6 +713,14 @@
             "Label": "",
             "Direction": "EAST",
             "Bitsize": "8"
+          }
+        },
+        {
+          "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
+          "x": 5,
+          "y": 1,
+          "properties": {
+            "Text": "Name: Vy Mai"
           }
         },
         {
@@ -739,22 +755,6 @@
           "y": 38,
           "properties": {
             "Text": "0 \u003d STATE MACHINE"
-          }
-        },
-        {
-          "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
-          "x": 5,
-          "y": 3,
-          "properties": {
-            "Text": "Date:  **EDIT ME**"
-          }
-        },
-        {
-          "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
-          "x": 5,
-          "y": 1,
-          "properties": {
-            "Text": "Name: **EDIT ME**"
           }
         },
         {
@@ -3497,6 +3497,8 @@
     "NWIyMWNmOTQ1MjhmZTk3YjYwYmM3ZDYyYzkyM2U1NmYxMDBmMmFkZjFmNzFhYTg1MmJkN2IyMTczODQ5NzdjMAkxOWRlZWY5NmU2MmYwNmJlYWZmODk0Njg2MDcxNDcyNTJlNDhlYzM4ZjE5ZjBhYmY1ZjZmMDM5OTNiZWM5ODlkCTE2ODYzMzU3MDA3NTMJMDU3NWIzN2RlMTlmMTRkZWFhNjM3MTYyNjgyNmI0MjNmNDY0NjY1YmFlNmFlNTBhNTY4NTMwNjEzZGIxOTNlZA\u003d\u003d",
     "MTlkZWVmOTZlNjJmMDZiZWFmZjg5NDY4NjA3MTQ3MjUyZTQ4ZWMzOGYxOWYwYWJmNWY2ZjAzOTkzYmVjOTg5ZAliNTQxNGU4YzRhYzFiNGZjMGM0ZThkYjA1ZGNmOTRhMjMwNzZiYWRlMzBkODI5MTcxOTYxYWRhZDcwNWI3ZGYwCTE2ODYzMzYwMDQ3NjcJNTE3YjJlOTE2NTQ1ZGEzMGJkY2RlYzUyMTgyYzMxYjk1N2FiMjUzNGI2YWRjOTY4YmI1ZTFmODk2MTE0ZjcyZQ\u003d\u003d",
     "YjU0MTRlOGM0YWMxYjRmYzBjNGU4ZGIwNWRjZjk0YTIzMDc2YmFkZTMwZDgyOTE3MTk2MWFkYWQ3MDViN2RmMAk2MjA3MTk1NWVjNDY1MTE1OGY1MWE1ODIzOWUwN2QwY2NhOTk2NmUwNDc4Y2NhZDBjNTc3NjI2NzQ5YWEyZWY4CTE2ODYzMzYxMDc1MDIJMGRmYTEwMDg1ZDQ1YThmNzg5YTZmNzUxMzVjMTE4MzRmODc5ZWJiMDc5MWMyNjhiNGVkZmEzZGY4MDU0MjYwMg\u003d\u003d",
-    "NjIwNzE5NTVlYzQ2NTExNThmNTFhNTgyMzllMDdkMGNjYTk5NjZlMDQ3OGNjYWQwYzU3NzYyNjc0OWFhMmVmOAkwMzI2MzBjMzUyY2NmZGIwMGY5Yzc2NDE2YmJmM2ViYTgyY2RjMzBmMWMxZDAzMzdmMTc4ZDU0Y2Y0ZTYwNzU0CTE2ODYzMzYxNzA4MzIJMzlhZGNiYjQ2Njk0NjNmN2VhNTM5ZWJiNmZmOWUwN2I4YjdlOGM0ZDhhMTI4ZTBjZWJlZDNlZDYxZmIwMDczOA\u003d\u003d"
+    "NjIwNzE5NTVlYzQ2NTExNThmNTFhNTgyMzllMDdkMGNjYTk5NjZlMDQ3OGNjYWQwYzU3NzYyNjc0OWFhMmVmOAkwMzI2MzBjMzUyY2NmZGIwMGY5Yzc2NDE2YmJmM2ViYTgyY2RjMzBmMWMxZDAzMzdmMTc4ZDU0Y2Y0ZTYwNzU0CTE2ODYzMzYxNzA4MzIJMzlhZGNiYjQ2Njk0NjNmN2VhNTM5ZWJiNmZmOWUwN2I4YjdlOGM0ZDhhMTI4ZTBjZWJlZDNlZDYxZmIwMDczOA\u003d\u003d",
+    "MDMyNjMwYzM1MmNjZmRiMDBmOWM3NjQxNmJiZjNlYmE4MmNkYzMwZjFjMWQwMzM3ZjE3OGQ1NGNmNGU2MDc1NAkyZjU5YmVhMjE1ZmI5YjM5YmViNTJjM2M2MWZhNTlkMGFlMzk3MGQxYjBlNjg5ODI3ODA4NmM4NDQ5YjU5NWFmCTE2ODY0MzE1Mjg3NjYJZmE3YTMwYzkyOGU1NzE1OGI3MmNkY2RiNzk3OTI0M2Y5NjE3NWQyNjU4MTA2MzMwNDMwNGRjODcyN2QyMWMzYwlDV1l4T0dGaU1UaG1OV0psWlROaE1XWTROREJqWWpBd09HSmxNR1ExWlRRek9Ua3pZamxpTm1ZeFpUWmhPR1ZpWldFeE56ZGhOell5T0dOa01EUTNOR0VKTVRZME16WXdPREE0T1RZMk1BbGlOVFF6WkRZME5URTFZMlUxWXpFNE0ySmhOalU0TW1SbU5tSmlPV0V6TVRRMk1XWXlOek5tT1dGaVpHUTROelprWWpWbVlXWXdOR1poT0RZMVpXWXgJTVROaVlXTTNPV0pqTTJZeU1ERTJaVE13TURRd1ltWmxOek5qTkRabFltWTRPVGMzWTJFME16SmpZVE0yTXpSbU1tWmtZakJoTURCbE1UWTBPVFk0TVFsbVpEUTBOelZoT1dJNU5HWmlNelk1TVdRMll6a3paakUzWlRsa05UazRPRFkwTkdJNU1XWmxOVGxoWTJReU0ySTJNV1F4TW1KaE1HTTFNVGxtTkRFMENURTJORE0yTURrM09ERTVNVElKTjJReFpXUmpNVEUxTnpSbVl6VmpZVEZoTVdZd01UUTBORGRsWTJOaFlXTTFaR0l5TkRkbU1HTmhOVE14WkRZMlpUUXlZV1E1TXpabE9EVTROREl5WXc9PQlZMlZtWW1VelpHTTBOR1V4TVRJM1pUazNZVFprWlRjNU16SXpOalptWVROaVlUTTFNemsyWVRFeE1HUmlNRFpqTlRabVlUVmhOelE1T0RZeVlUTXdaQWxpT0RJeU16ZzJOVFUyWmpZNE5qWTBNak15Wmpjd09EVTJOREEyT0dVNFpqQTBNamRtWmpKa056YzRaV001WVROaE0yVTJNR0pqWTJGaE9USXpZVEUzQ1RFMk9EWXpNamd6TXprd016Z0paR1V4TkRjek1UWXlZbVk0WVRaa1lUTmxOR00zTTJFeFpXSXdORFk0T1RnM1ltUTBNR0UxWlRnMU9UWTVaR00yT1dVeE5USmhNVEU0WkRRMU1UUXdOQT09",
+    "MmY1OWJlYTIxNWZiOWIzOWJlYjUyYzNjNjFmYTU5ZDBhZTM5NzBkMWIwZTY4OTgyNzgwODZjODQ0OWI1OTVhZgkwMTMxMjgxOGUyOTMwNTljYzlkYTZmMDcxOTg3ODVjYzE1ZTNhYzMzOGViOWQ0YWE5ODJmNjk4NWQ3YzRjMzViCTE2ODY0MzE4NjY1NzkJZmE3YTMwYzkyOGU1NzE1OGI3MmNkY2RiNzk3OTI0M2Y5NjE3NWQyNjU4MTA2MzMwNDMwNGRjODcyN2QyMWMzYw\u003d\u003d"
   ]
 }

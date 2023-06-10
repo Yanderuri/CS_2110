@@ -109,6 +109,14 @@
         },
         {
           "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
+          "x": 1,
+          "y": 1,
+          "properties": {
+            "Text": "Name: Vy Mai\n"
+          }
+        },
+        {
+          "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
           "x": 45,
           "y": 57,
           "properties": {
@@ -172,9 +180,9 @@
         {
           "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
           "x": 1,
-          "y": 1,
+          "y": 3,
           "properties": {
-            "Text": "Name: *EDIT ME*"
+            "Text": "Date: 10/06/2023"
           }
         },
         {
@@ -187,14 +195,6 @@
             "Is input?": "Yes",
             "Direction": "NORTH",
             "Bitsize": "1"
-          }
-        },
-        {
-          "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
-          "x": 1,
-          "y": 3,
-          "properties": {
-            "Text": "Date: *EDIT ME*"
           }
         },
         {
@@ -222,14 +222,6 @@
           }
         },
         {
-          "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
-          "x": 1,
-          "y": 5,
-          "properties": {
-            "Text": "Collaborators: *EDIT ME*"
-          }
-        },
-        {
           "name": "com.ra4king.circuitsim.gui.peers.gates.AndGatePeer",
           "x": 34,
           "y": 26,
@@ -254,6 +246,14 @@
             "Is input?": "No",
             "Direction": "WEST",
             "Bitsize": "1"
+          }
+        },
+        {
+          "name": "com.ra4king.circuitsim.gui.peers.misc.Text",
+          "x": 1,
+          "y": 5,
+          "properties": {
+            "Text": "Collaborators: Me myself and I"
           }
         },
         {
@@ -1203,6 +1203,7 @@
     "ZWU5YTNjYWEyZmZkZjUwOGY3YjJmMWU4MTU1YWZjODk5MDc5YTIyZTM0MDQ3Y2QzOTZmNDM0ZmI0YmI3ZWM5MQkzMzI4MzBlODUyNTliYzY2YzhhNDZmZmNmYTZiZjg3ODliZTM0MjFmNDhiYzQ1ZGMyMjRkMjc2NjMwZjA3NzdhCTE2ODYyNjQ1NTc2NzgJZGRjZGNiMzBjNTJjYmIwZTBjMzM3NTIyZjAzZDE2MWJlYjhlYTYxNjFjNDM4OTlmYmQwM2U5N2I2ZmU4MmE0MA\u003d\u003d",
     "MzMyODMwZTg1MjU5YmM2NmM4YTQ2ZmZjZmE2YmY4Nzg5YmUzNDIxZjQ4YmM0NWRjMjI0ZDI3NjYzMGYwNzc3YQllOTRjZGM5MDM1Mzg4MTM5YzNlMTBiNzdlOWZlMDI2ZmZjNmVjYWRhY2RmZTJkZjA2NWUwZWE2NDIxYWQ2MWJhCTE2ODYyNjQ2OTY2MTUJMzdiNDUwY2VmMTI1MWM0NTAzMzk2OTRiNDM1MzNjYzdjODI2NmJkOTY3ZWFhZjAzNjY2MjZiYWU5YjlkZWY3NA\u003d\u003d",
     "ZTk0Y2RjOTAzNTM4ODEzOWMzZTEwYjc3ZTlmZTAyNmZmYzZlY2FkYWNkZmUyZGYwNjVlMGVhNjQyMWFkNjFiYQljZWZiZTNkYzQ0ZTExMjdlOTdhNmRlNzkzMjM2NmZhM2JhMzUzOTZhMTEwZGIwNmM1NmZhNWE3NDk4NjJhMzBkCTE2ODYyNjQ4Mjc1NjYJYTdlNDdlMjM5MmIyZWM5NzhjOTVhMzZlMTdjNGZmNjQ2YWEyODA5ODBhM2JlOGI5ZTZjNjQwMjgxZmUyZmYwZA\u003d\u003d",
-    "Y2VmYmUzZGM0NGUxMTI3ZTk3YTZkZTc5MzIzNjZmYTNiYTM1Mzk2YTExMGRiMDZjNTZmYTVhNzQ5ODYyYTMwZAliODIyMzg2NTU2ZjY4NjY0MjMyZjcwODU2NDA2OGU4ZjA0MjdmZjJkNzc4ZWM5YTNhM2U2MGJjY2FhOTIzYTE3CTE2ODYzMjgzMzkwMzgJZGUxNDczMTYyYmY4YTZkYTNlNGM3M2ExZWIwNDY4OTg3YmQ0MGE1ZTg1OTY5ZGM2OWUxNTJhMTE4ZDQ1MTQwNA\u003d\u003d"
+    "Y2VmYmUzZGM0NGUxMTI3ZTk3YTZkZTc5MzIzNjZmYTNiYTM1Mzk2YTExMGRiMDZjNTZmYTVhNzQ5ODYyYTMwZAliODIyMzg2NTU2ZjY4NjY0MjMyZjcwODU2NDA2OGU4ZjA0MjdmZjJkNzc4ZWM5YTNhM2U2MGJjY2FhOTIzYTE3CTE2ODYzMjgzMzkwMzgJZGUxNDczMTYyYmY4YTZkYTNlNGM3M2ExZWIwNDY4OTg3YmQ0MGE1ZTg1OTY5ZGM2OWUxNTJhMTE4ZDQ1MTQwNA\u003d\u003d",
+    "YjgyMjM4NjU1NmY2ODY2NDIzMmY3MDg1NjQwNjhlOGYwNDI3ZmYyZDc3OGVjOWEzYTNlNjBiY2NhYTkyM2ExNwljOTczZDE4OTE1MTIwZTYxMmNmNGViNGFlYzUxOWIwMDA5M2UxOTMxNjM3NWJhMmEwZDQ1MGIyMDdiY2JjMmMxCTE2ODY0MzEzNjQyNTUJMTk5MGY1OGIyNmU2ZDZkZDY1YTg4MzE0MzFlZjFmMTZmY2U3MWIyOTA5MTM4OGY0NTY5MTE4OGNmMTA4M2YxNg\u003d\u003d"
   ]
 }
