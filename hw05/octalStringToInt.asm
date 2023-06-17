@@ -2,7 +2,7 @@
 ;; CS 2110 - Summer 2023
 ;; Homework 5 - octalStringToInt
 ;;=============================================================
-;; Name: 
+;; Name: Vy Mai
 ;;=============================================================
 
 ;;  Pseudocode (see PDF for explanation)
@@ -12,7 +12,7 @@
 ;;  int length = 4;
 ;;  int value = 0;
 ;;  int i = 0;
-;;  while (i < length) {
+;;  while (i < length) { ;; while (length - i > 0)
 ;;      int leftShifts = 3;
 ;;      while (leftShifts > 0) {
 ;;          value += value;
@@ -26,8 +26,7 @@
 
 .orig x3000
     ;; YOUR CODE HERE
-    HALT
-    
+    HALT 
 ;; Do not change these values! 
 ;; Notice we wrote some values in hex this time. Maybe those values should be treated as addresses?
 ASCII           .fill -48
