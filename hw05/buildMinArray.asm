@@ -2,7 +2,7 @@
 ;; CS 2110 - Summer 2023
 ;; Homework 5 - buildMinArray
 ;;=============================================================
-;; Name: 
+;; Name: Vy Mai
 ;;=============================================================
 
 ;;  Pseudocode (see PDF for explanation)

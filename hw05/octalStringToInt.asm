@@ -48,6 +48,7 @@
     ADD R4, R4, R2
     ADD R1, R1, #1
     BRn LOOP
+    STI R4, RESULTADDR
     TRAP x25
 
 
