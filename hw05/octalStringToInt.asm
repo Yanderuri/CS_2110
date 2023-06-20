@@ -12,21 +12,12 @@
 ;;  int length = 4;
 ;;  int value = 0;
 ;;  int i = 0;
-;;  while (i < length) { ;; while (i - length < 0)
-
-
-;;      int leftShifts = 3;
-;;      while (leftShifts > 0) {
-;;          value += value;
-;;          leftShifts--;
-
-
-;;      } // MANUAL BLOCK
+;;  while (i < length) { ;; while (length - i > 0)
+;;      MANUAL BLOCK
 ;;      value += value;
 ;;      value += value;
-;;      value += value; // END MANUAL
-
-
+;;      value += value; 
+;;      // END MANUAL
 ;;      int digit = octalString[i] - 48;
 ;;      value += digit;
 ;;      i++;
@@ -35,22 +26,38 @@
 
 .orig x3000
     ;; YOUR CODE HERE
-    ;; R0 = answer
-    ;; R1 = current char
-
-    ;; R4 = temp register for storing/reading from memory
+    ;; R0 = length
+    ;; R1 = negative length
+    ;; The intention is to have R0 - R1 = 0,1,2,3 by increasing R1 from -4 -> 0
+    ;; This makes the looping condition easy.
     
-    HALT
+    LD R0, LENGTH
+    NOT R1, R0
+    ADD R1, R1, #1
+    AND R4, R4, #0
+    LOOP
+    ADD R4, R4, R4
+    ADD R4, R4, R4
+    ADD R4, R4, R4
+    LD R2, OCTALSTRING
+    ADD R2, R2, R0
+    ADD R2, R2, R1
+    LDR R2, R2, #0
+    LD R3, ASCII
+    ADD R2, R2, R3
+    ADD R4, R4, R2
+    ADD R1, R1, #1
+    BRn LOOP
+    TRAP x25
+
 
 ;; Do not change these values! 
 ;; Notice we wrote some values in hex this time. Maybe those values should be treated as addresses?
+RESULTADDR      .fill x4000
 ASCII           .fill -48
 OCTALSTRING     .fill x5000
 LENGTH          .fill 4
-RESULTADDR      .fill x4000
 
-CURRENT_CHAR    .blkw 1
-NEG_LENGTH      .blkw 1
 ;;
 .end
 
