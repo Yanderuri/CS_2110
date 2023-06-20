@@ -35,6 +35,7 @@
     NOT R1, R0
     ADD R1, R1, #1
     AND R4, R4, #0
+    LD R3, ASCII
     LOOP
     ADD R4, R4, R4
     ADD R4, R4, R4
@@ -43,7 +44,6 @@
     ADD R2, R2, R0
     ADD R2, R2, R1
     LDR R2, R2, #0
-    LD R3, ASCII
     ADD R2, R2, R3
     ADD R4, R4, R2
     ADD R1, R1, #1
