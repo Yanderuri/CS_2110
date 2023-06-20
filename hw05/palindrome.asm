@@ -31,6 +31,13 @@
 
 .orig x3000
 	;; YOUR CODE HERE
+	
+	TRUE
+	AND R4, R4, #0
+	ADD R4, R4, #1
+	HALT
+	FALSE
+	AND R4, R4, #0
 	HALT
 
 ;; Do not change these values!
