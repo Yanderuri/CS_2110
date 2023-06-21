@@ -17,11 +17,7 @@
 
 .orig x3000
     ;; YOUR CODE HERE
-
-    AND R0, R0, #0
     LD R0, X ;; int x = 14;
-
-    AND R1, R1, #0
     LD R1, MOD ;; int mod = 3;
 
     NOT R1, R1 
