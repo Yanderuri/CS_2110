@@ -11,6 +11,7 @@
 ;;	int A[] = {-4, 6, 0};
 ;;	int B[] = {1, 5, 2};
 ;;	int C[3];
+;; 			  {0, 1, 0}
 ; int i = 0;
 ; int length = 2;
 ; while(length + 1 > 0){
@@ -32,13 +33,11 @@
 	AND R1, R1, #0	;; int i = 0;
 
 	LOOP
-	LEA R2, A
-	LDR R2, R2, #0
+	LD R2, A
 	ADD R2, R2, R0
 	LDR R2, R2, #0
 
-	LEA R3, B
-	LDR R3, R3, #0
+	LD R3, B
 	ADD R3, R3, R0
 	LDR R3, R3, #0
 
