@@ -8,10 +8,9 @@
 ;;  Pseudocode (see PDF for explanation)
 ;;  Pseudocode values are based on the labels' default values.
 ;;
-;;	int A[] = {-4, 6, 0};
-;;	int B[] = {1, 5, 2};
-;;	int C[3];
-;; 			  {0, 1, 0}
+;;	int A[] 	= {-4, 6, 0};
+;;	int B[] 	= {1, 5, 2};
+;;	int C[3] 	--> {0, 1, 0}
 ; int i = 0;
 ; int length = 2;
 ; while(length + 1 > 0){
@@ -57,14 +56,13 @@
 	BR ENDIF
 
 	ENDIF
-	LEA R4, C 		;; R4 <- addr of C
-	LDR R4, R4, #0 	;; R4 <- addr of C[0]
-	ADD R4, R4, R1
-	STR R3, R4, #0
+	LEA R2, C 		;; R4 <- addr of C
+	LDR R2, R2, #0
+	ADD R2, R2, R1
+	STR R3, R2, #0
 
 	ADD R1, R1, #1	;; i++
 	ADD R0, R0, #-1	;; length--
-
 	BRzp LOOP
 	HALT
 

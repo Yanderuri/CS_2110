@@ -17,21 +17,21 @@
 
 .orig x3000
     ;; YOUR CODE HERE
-    LD R0, X ;; int x = 14;
-    LD R1, MOD ;; int mod = 3;
+    ld R0, X ;; int x = 14;
+    ld R1, MOD ;; int mod = 3;
 
-    NOT R1, R1 
-    ADD R1, R1, #1 ;; mod = -mod;
+    not R1, R1 
+    add R1, R1, #1 ;; mod = -mod;
 
     LOOP
-    ADD R0, R0, R1 ;; x + (-mod)
-    BRzp LOOP ;; while (x - mod >= 0)
+    add R0, R0, R1 ;; x + (-mod)
+    brzp LOOP ;; while (x - mod >= 0)
 
-    NOT R1, R1 ;; once R0 is negative, we stop and add positive R1 back.
-    ADD R1, R1, #1
+    not R1, R1 ;; once R0 is negative, we stop and add positive R1 back.
+    add R1, R1, #1
 
-    ADD R0, R0, R1
-    ST R0, ANSWER ;; mem[ANSWER] = x;
+    add R0, R0, R1
+    st R0, ANSWER ;; mem[ANSWER] = x;
 
     HALT
 .end 
