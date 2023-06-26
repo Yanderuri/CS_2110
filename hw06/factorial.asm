@@ -2,7 +2,7 @@
 ;;  CS 2110 - Spring 2023
 ;;  Homework 6 - Factorial
 ;;=============================================================
-;;  Name:
+;;  Name: Vy Mai
 ;;============================================================
 
 ;;  In this file, you must implement the 'MULTIPLY' and 'FACTORIAL' subroutines.
@@ -43,6 +43,32 @@
 
 MULTIPLY ;; Do not change this label! Treat this as like the name of the function in a function header
     ;; Code your implementation for the MULTIPLY subroutine here!
+    ADD R6, R6, #-4
+    STR R7, R6, #2
+    STR R5, R6, #1
+    ADD R5, R6, #0
+
+    ADD R6, R6, #-5 ;; SET X TO -4 - NUM LVs OR -5 IF NO LVs
+    
+    STR R0, R6, #0
+    STR R1, R6, #1
+    STR R2, R6, #2
+    STR R3, R6, #3
+    STR R4, R6, #4
+
+    ;; SUBROUTINE HERE
+    ;; SUBROUTINE ENDS
+
+    TEARDOWN
+    LDR R0, R6, #0
+    LDR R1, R6, #1
+    LDR R2, R6, #2
+    LDR R3, R6, #3
+    LDR R4, R6, #4
+    ADD R6, R5, #0
+    LDR R5, R6, #1
+    LDR R7, R6, #2
+    ADD R6, R6, #3
     RET
 
 ;;  FACTORIAL Pseudocode (see PDF for explanation and examples)
@@ -61,4 +87,6 @@ FACTORIAL ;; Do not change this label! Treat this as like the name of the functi
 
 ;; Needed to Simulate Subroutine Call in Complx
 STACK .fill xF000
+
+X .fill x0005
 .end
