@@ -14,7 +14,7 @@
 ; int i = 0;
 ; int length = 2;
 ; while(length + 1 > 0){
-;     if (A[length] <= B[length]){
+;     if (A[length] - B[length] <= 0){
 ;         C[i] = 1;
 ;     }
 ;     else{
