@@ -28,6 +28,19 @@
 
 .orig x3000
     ;; You do not need to write anything here
+
+    and r6, r6, #0
+    ld r0, A
+    add R6, R6, #-2
+    str r0, r6, #0
+    ld r0, B
+    str r0, r6, #1
+    jsr MULTIPLY
+
+    ldr r0, r6, #0
+    add r6, r6, #1
+    st r0, C
+    add r6, r6, #2
     HALT
 
 ;;  MULTIPLY Pseudocode (see PDF for explanation and examples)   
@@ -47,16 +60,17 @@ MULTIPLY ;; Do not change this label! Treat this as like the name of the functio
     STR R7, R6, #2
     STR R5, R6, #1
     ADD R5, R6, #0
-
     ADD R6, R6, #-5 ;; SET X TO -4 - NUM LVs OR -5 IF NO LVs
-    
     STR R0, R6, #0
     STR R1, R6, #1
     STR R2, R6, #2
     STR R3, R6, #3
     STR R4, R6, #4
 
+    HALT
     ;; SUBROUTINE HERE
+
+    BRz TEARDOWN
     ;; SUBROUTINE ENDS
 
     TEARDOWN
@@ -88,5 +102,9 @@ FACTORIAL ;; Do not change this label! Treat this as like the name of the functi
 ;; Needed to Simulate Subroutine Call in Complx
 STACK .fill xF000
 
-X .fill x0005
+A .fill x0005
+B .fill x0003
+C .blkw 1
+
+D .fill 
 .end
