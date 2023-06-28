@@ -57,19 +57,19 @@ MULTIPLY ;; Do not change this label! Treat this as like the name of the functio
     STR R4, R6, #4
 
 
-    ;; SUBROUTINE HERE
-    LDR R0, R5, #4 ;; first local variable
-    LDR R1, R5, #5 ;; second local variable
+    ;; SUBROUTINE STARTS
     AND R2, R0, #0 ;; register for return value
-
-    LOOP
-    ADD R2, R2, R1
+    LDR R0, R5, #4 ;; first argument
+    BRz MULT_TEARDOWN
+    LDR R1, R5, #5 ;; second argument
+    BRz MULT_TEARDOWN
+    MULT_LOOP
+    ADD R2, R2, R0
     ADD R1, R1, #-1
-    BRp LOOP
-    BR TEARDOWN
+    BRp MULT_LOOP
     ;; SUBROUTINE ENDS
 
-    TEARDOWN
+    MULT_TEARDOWN
     STR R2, R5, #3 ;; store return value in frame pointer return value
 
     LDR R0, R6, #0
@@ -89,22 +89,65 @@ MULTIPLY ;; Do not change this label! Treat this as like the name of the functio
 ;;
 ;;  FACTORIAL(int n) {
 ;;      int ret = 1;
-;;      for (int x = 2; x <= n; x++) {
+;;      int x = 2  -> x is between [2, n]
+;;      while (x <= n){
 ;;          ret = MULTIPLY(ret, x);
+;;          x++;
 ;;      }
+;;      while (x - n <= 0) { 
+;;          ret = MULT(ret, x);
+;;          x++;
+;;      }
+;;
+;;
 ;;      return ret;
 ;;  }
 
+; @SUBROUTINE
 FACTORIAL ;; Do not change this label! Treat this as like the name of the function in a function header
     ;; Code your implementation for the FACTORIAL subroutine here!
+    ADD R6, R6, #-4 ;; Make space for RV, RA, old FP, LV1
+    STR R7, R6, #2 ;; Save return address
+    STR R5, R6, #1 ;; Save original frame pointer
+    ADD R5, R6, #0 ;; New frame pointer for this subroutine
+
+    ADD R6, R6, #-5 ;; SET X TO -4 - NUM LVs OR -5 IF NO LVs
+    STR R0, R6, #0
+    STR R1, R6, #1
+    STR R2, R6, #2
+    STR R3, R6, #3
+    STR R4, R6, #4
+
+
+    ;; SUBROUTINE STARTS
+    LDR R0, R5, #4 ;; first argument, int n
+
+    AND R1, R1, #0 
+    ADD R1, R1, #2 ;; int x = 2
+
+    AND R2, R0, #0 ;; register for return value
+    ADD R2, R2, #1 ;; int ret = 1;
+
+    FACT_LOOP
+
+
+    BRnz FACT_LOOP
+    ;; SUBROUTINE ENDS
+    FACT_TEARDOWN
+    LDR R0, R6, #0
+    LDR R1, R6, #1
+    LDR R2, R6, #2
+    LDR R3, R6, #3
+    LDR R4, R6, #4
+    
+    ADD R6, R5, #0
+
+    LDR R5, R6, #1
+    LDR R7, R6, #2
+    ADD R6, R6, #3
     RET
 
 ;; Needed to Simulate Subroutine Call in Complx
 STACK .fill xF000
 
-A .fill x0005
-B .fill x0003
-C .blkw 1
-
-D .fill 
 .end
