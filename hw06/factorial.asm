@@ -94,8 +94,9 @@ MULTIPLY ;; Do not change this label! Treat this as like the name of the functio
 ;;          ret = MULTIPLY(ret, x);
 ;;          x++;
 ;;      }
+;;      optimized loop
 ;;      while (x - n <= 0) { 
-;;          ret = MULT(ret, x);
+;;          ret = MULTIPLY(ret, x);
 ;;          x++;
 ;;      }
 ;;
@@ -121,18 +122,26 @@ FACTORIAL ;; Do not change this label! Treat this as like the name of the functi
 
     ;; SUBROUTINE STARTS
     LDR R0, R5, #4 ;; first argument, int n
+    NOT R0, R0
+    ADD R0, R0, #1 ;; R0 = -n;
 
     AND R1, R1, #0 
-    ADD R1, R1, #2 ;; int x = 2
-
+    ADD R1, R1, #1 ;; int x = 2
     AND R2, R0, #0 ;; register for return value
     ADD R2, R2, #1 ;; int ret = 1;
-
     FACT_LOOP
+    ADD R1, R1, #1
+    LDR R0, R5, #4
 
-
+    ADD R6, R6, #-2
+    STR R2, R6, #0
+    STR R1, R6, #1
+    JSR MULTIPLY
+    LDR R2, R6, #0 ;; ret = MULT(ret, X)
+    ADD R0, R0, R1
     BRnz FACT_LOOP
     ;; SUBROUTINE ENDS
+    STR R2, R5, #3
     FACT_TEARDOWN
     LDR R0, R6, #0
     LDR R1, R6, #1
