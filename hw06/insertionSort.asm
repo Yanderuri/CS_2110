@@ -33,7 +33,7 @@
 ;;  INSERTION_SORT **RECURSIVE** Pseudocode (see PDF for explanation and examples)
 ;; 
 ;;  INSERTION_SORT(int[] arr (addr), int length) {
-;;      if (length <= 1) {
+;;      if (length - 1 <= 0) {
 ;;        return;
 ;;      }
 ;;  
@@ -42,7 +42,7 @@
 ;;      int last_element = arr[length - 1];
 ;;      int n = length - 2;
 ;;  
-;;      while (n >= 0 && arr[n] > last_element) {
+;;      while (n >= 0 && arr[n] - last_element > 0) {
 ;;          arr[n + 1] = arr[n];
 ;;          n--;
 ;;      }
@@ -50,9 +50,40 @@
 ;;      arr[n + 1] = last_element;
 ;;  }
 
+; @SUBROUTINE
 INSERTION_SORT ;; Do not change this label! Treat this as like the name of the function in a function header
     ;; Code your implementation for the INSERTION_SORT subroutine here!
     ;; NOTE: Your implementation MUST be done recursively
+
+    ADD R6, R6, #-4 ;; Make space for RV, RA, old FP, LV1
+    STR R7, R6, #2 ;; Save return address
+    STR R5, R6, #1 ;; Save original frame pointer
+    ADD R5, R6, #0 ;; New frame pointer for this subroutine
+
+    ADD R6, R6, #-5 ;; SET X TO -4 - NUM LVs OR -5 IF NO LVs
+    STR R0, R6, #0
+    STR R1, R6, #1
+    STR R2, R6, #2
+    STR R3, R6, #3
+    STR R4, R6, #4
+
+    LDR R0, R5, #5
+    ADD R0, R0, #-1
+    BRnz INS_TEARDOWN
+
+
+
+    INS_TEARDOWN
+    LDR R0, R6, #0
+    LDR R1, R6, #1
+    LDR R2, R6, #2
+    LDR R3, R6, #3
+    LDR R4, R6, #4
+    
+    ADD R6, R5, #0
+    LDR R5, R6, #1
+    LDR R7, R6, #2
+    ADD R6, R6, #3
     RET
 
 ;; Needed to Simulate Subroutine Call in Complx
