@@ -2,7 +2,7 @@
 ;;  CS 2110 - Spring 2023
 ;;  Homework 6 - Preorder Traversal
 ;;=============================================================
-;;  Name:
+;;  Name: Vy Mai
 ;;============================================================
 
 ;;  In this file, you must implement the 'PREORDER_TRAVERSAL' subroutine.
@@ -45,7 +45,8 @@
 ;;      index++;
 ;;
 ;;      index = PREORDER_TRAVERSAL(root.left, arr, index);
-;;      return PREORDER_TRAVERSAL(root.right, arr, index);
+;;      right = PREORDER_TRAVERSAL(root.right, arr, index);
+;;      return right;
 ;;  }
 
 
