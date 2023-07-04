@@ -2,7 +2,7 @@
 ;;  CS 2110 - Spring 2023
 ;;  Homework 6 - Insertion Sort
 ;;=============================================================
-;;  Name:
+;;  Name:    Vy Mai
 ;;============================================================
 
 ;;  In this file, you must implement the 'INSERTION_SORT' subroutine.
@@ -66,12 +66,55 @@ INSERTION_SORT ;; Do not change this label! Treat this as like the name of the f
     STR R2, R6, #2
     STR R3, R6, #3
     STR R4, R6, #4
+    ;; Build up finished
 
-    LDR R0, R5, #5
-    ADD R0, R0, #-1
+    LDR R1, R5, #5 ;; R1 = length - 1;
+    ADD R1, R1, #-1
     BRnz INS_TEARDOWN
+    ;;      code below: INSERTION_SORT(arr, length - 1);
+    ADD R6, R6, #-2
+    LDR R0, R5, #4
+    STR R0, R6, #0
+    STR R1, R6, #1
+    JSR INSERTION_SORT
+    ADD R6, R6, #3
+    ;;      code above
 
+    LDR R0, R5, #4    
+    ADD R0, R0, R1
+    LDR R0, R0, #0      ;; R0 = int last_element = arr[length - 1];
 
+    LDR R1, R5, #5      ;; R1 = n 
+    ADD R1, R1, #-2     ;; n = length - 2;
+
+    NOT R0, R0
+    ADD R0, R0, #1      ;; R0 = - R0
+    LOOP
+    LDR R2, R5, #4
+    ADD R2, R2, R1      ;; R2 = arr[n] address
+    LDR R2, R2, #0
+    ADD R2, R2, R0      ;; arr[n] - last_element > 0
+    BRnz END_LOOP
+
+    LDR R2, R5, #4      ;; R2 = arr[n] address
+    ADD R2, R2, R1
+
+    ADD R3, R2, #1      ;; R3 = arr[n+1] address
+    LDR R2, R2, #0      ;; R2 = value at arr[n]
+    STR R2, R3, #0
+
+    ADD R1, R1, #-1     ;; n--;
+    BRzp LOOP
+    END_LOOP 
+
+    NOT R0, R0          ;; negate last element back into positive.
+    ADD R0, R0, #1 
+
+    ADD R1, R1, #1      ;; n = n + 1
+
+    LDR R2, R5, #4      ;; R2 = address of arr[0]
+    ADD R2, R2, R1      ;; R2 = address of arr[n]
+    STR R0, R2, #0      ;; store R0 (which is last_element) where R2 points to.
 
     INS_TEARDOWN
     LDR R0, R6, #0
