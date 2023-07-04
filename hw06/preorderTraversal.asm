@@ -57,17 +57,15 @@ PREORDER_TRAVERSAL ;; Do not change this label! Treat this as like the name of t
     STR R5, R6, #1 ;; Save original frame pointer
     ADD R5, R6, #0 ;; New frame pointer for this subroutine
 
-    ADD R6, R6, #-5 ;; SET X TO -4 - NUM LVs OR -5 IF NO LVs
+    ADD R6, R6, #-6 ;; SET X TO -4 - NUM LVs OR -5 IF NO LVs
     STR R0, R6, #0
     STR R1, R6, #1
     STR R2, R6, #2
     STR R3, R6, #3
     STR R4, R6, #4
 
-    LDR R0, R5, #5
-    ADD R0, R0, #-1
-    BRnz PRE_TEARDOWN
-
+    LDR R0, R5, #4
+    BRz PRE_TEARDOWN
 
 
     PRE_TEARDOWN
