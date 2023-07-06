@@ -26,8 +26,12 @@ size_t my_strlen(const char *s)
     * function, you can delete the UNUSED_PARAM lines.
     */
     UNUSED_PARAM(s);
-    
-    return 0;
+    int ans = 0;
+    while (s != 0){
+        s++;
+        ans++;
+    }
+    return ans;
 }
 
 /**

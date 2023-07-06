@@ -1,6 +1,6 @@
 /**
  * @file main.c
- * @author YOUR NAME HERE
+ * @author Vy Mai
  * @brief testing and debugging functions written in my_string.c, oh_queue.c
  * @date 2023-03-xx
  */
