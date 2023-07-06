@@ -37,9 +37,7 @@
 ;;      * The node's right child address is located in the 3rd memory location (offset 2 from the node itself)
 
 ;;  PREORDER_TRAVERSAL(Node root (addr), int[] arr (addr), int index) {
-;;      if (root == 0) {
-;;          return index;
-;;      }
+;;      if (root == 0) { return index; }
 ;;
 ;;      arr[index] = root.data;
 ;;      index++;
@@ -53,20 +51,63 @@
 PREORDER_TRAVERSAL ;; Do not change this label! Treat this as like the name of the function in a function header
     ;; Code your implementation for the PREORDER_TRAVERSAL subroutine here!
     ADD R6, R6, #-4 ;; Make space for RV, RA, old FP, LV1
-    STR R7, R6, #2 ;; Save return address
     STR R5, R6, #1 ;; Save original frame pointer
+    STR R7, R6, #2 ;; Save return address
     ADD R5, R6, #0 ;; New frame pointer for this subroutine
 
-    ADD R6, R6, #-6 ;; SET X TO -4 - NUM LVs OR -5 IF NO LVs
+    ADD R6, R6, #-5 ;; SET X TO -4 - NUM LVs OR -5 IF NO LVs
     STR R0, R6, #0
     STR R1, R6, #1
     STR R2, R6, #2
     STR R3, R6, #3
     STR R4, R6, #4
 
-    LDR R0, R5, #4
-    BRz PRE_TEARDOWN
+    LDR R1, R5, #5
+    LDR R0, R5, #4 ;; first argument, addr of root
+    BRz NULL_ROOT
 
+    LDR R0, R5, #4 
+    LDR R0, R0, #0 ;; R0 = value of root.data
+
+    LDR R1, R5, #5 ;; R1 = address of array
+
+    LDR R2, R5, #6 ;; R2 = index;
+
+    ADD R3, R1, R2 ;; address of arr[index]
+    STR R0, R3, #0 ;; arr[index] = root.data; all completed
+
+    ADD R2, R2, #1 ;; index++;
+    LDR R0, R5, #4 ;; addr of root
+    ADD R0, R0, #1 ;; R0 = root.left
+    LDR R0, R0, #0  ;; mem[root.left]
+    ADD R1, R1, #0 ; R1 SHOULD ALWAYS BE ADDRESS OF ARRAY.
+    ;; Prepartion for left call
+    ADD R6, R6, #-3 
+    STR R0, R6, #0  ;; push root.left
+    STR R1, R6, #1  ;; push addr of arr
+    STR R2, R6, #2  ;; push index
+    JSR PREORDER_TRAVERSAL
+    LDR R2, R6, 0   ;; index = PREORDER_TRAVERSAL(root.left, arr, index);
+    ADD R6, R6, #4  ;; reset stack
+
+    ;; Preparation for right call
+    ADD R6, R6, #-3
+    LDR R0, R5, #4 ;; addr of root
+    ADD R0, R0, #2 ;; R0 = root.right
+    LDR R0, R0, #0 ;; mem[root.right]
+    STR R0, R6, #0  ;; push root.right
+    STR R1, R6, #1  ;; push addr of arr
+    STR R2, R6, #2  ;; push index
+    JSR PREORDER_TRAVERSAL
+    LDR R3, R6, #0  ;; right = PREORDER_TRAVERSAL(root.right, arr, index);
+    ADD R6, R6, #4
+    STR R3, R5, #3  ;; return right;
+    BR PRE_TEARDOWN
+
+    NULL_ROOT ;; (root == 0)
+    LDR R0, R5, #6
+    STR R0, R5, #3 ;;      if (root == 0) { return index; }
+    BR PRE_TEARDOWN
 
     PRE_TEARDOWN
     LDR R0, R6, #0
@@ -74,7 +115,6 @@ PREORDER_TRAVERSAL ;; Do not change this label! Treat this as like the name of t
     LDR R2, R6, #2
     LDR R3, R6, #3
     LDR R4, R6, #4
-    
     ADD R6, R5, #0
     LDR R5, R6, #1
     LDR R7, R6, #2
