@@ -25,10 +25,9 @@ size_t my_strlen(const char *s)
     * parameters prior to implementing the function. Once you begin implementing this
     * function, you can delete the UNUSED_PARAM lines.
     */
-    UNUSED_PARAM(s);
     int ans = 0;
-    while (s != 0){
-        s++;
+    while (*s != 0){
+        s += sizeof(char);
         ans++;
     }
     return ans;
@@ -75,11 +74,13 @@ char *my_strncpy(char *dest, const char *src, size_t n)
     * parameters prior to implementing the function. Once you begin implementing this
     * function, you can delete the UNUSED_PARAM lines.
     */
-    UNUSED_PARAM(dest);
-    UNUSED_PARAM(src);
-    UNUSED_PARAM(n);
-    
-    return NULL;
+    char* results = &*dest;
+    while(n > 0){
+        src += sizeof(char);
+        dest += sizeof(char);
+        n--;
+    }
+    return results;
 }
 
 /**
