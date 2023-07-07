@@ -1,0 +1,67 @@
+Running suite(s): oh_queue_suite
+ my_string_suite
+27%: Checks: 81, Failures: 59, Errors: 0
+suites/oh_queue_suite.c:72:F:test_enqueue_single:test_enqueue_single:0: Expected no_of_people_in_queue to be 1 after inserting into empty users, was 0
+suites/oh_queue_suite.c:110:F:test_enqueue_two:test_enqueue_two:0: Expected no_of_people_in_queue to be 2 after inserting into users, was 0
+suites/oh_queue_suite.c:151:F:test_enqueue_multiple:test_enqueue_multiple:0: Expected no_of_people_in_queue to be 25 after enqueueing 25 users, was 0
+suites/oh_queue_suite.c:195:F:test_enqueue_null_terminator:test_enqueue_null_terminator:0: Expected no_of_people_in_queue to be 1 after inserting into empty users, was 0
+suites/oh_queue_suite.c:223:F:test_enqueue_long_name:test_enqueue_long_name:0: Expected no_of_people_in_queue to be 1 after inserting into empty users, was 0
+suites/oh_queue_suite.c:256:F:test_enqueue_too_many_students:test_enqueue_too_many_students:0: Assertion 'retVal == 0' failed: retVal == 1, 0 == 0
+suites/oh_queue_suite.c:302:F:test_remove_basic:test_remove_basic:0: Expected no_of_people_visited to be 1 after enqueueing 5 users and removing 1, was 0
+suites/oh_queue_suite.c:342:F:test_remove_single_student:test_remove_single_student:0: Expected no_of_people_visited to be 1 after enqueueing 1 user and removing 1, was 0
+suites/oh_queue_suite.c:351:F:test_remove_no_students:test_remove_no_students:0: Assertion 'retVal == 0' failed: retVal == 1, 0 == 0
+suites/oh_queue_suite.c:381:F:test_remove_multiple:test_remove_multiple:0: Expected no_of_people_visited to be 4 after enqueueing 10 users and removing 4, was 0
+suites/oh_queue_suite.c:424:F:test_remove_everything:test_remove_everything:0: Expected no_of_people_visited to be 10 after enqueueing 10 users and removeping 10, was 0
+suites/oh_queue_suite.c:455:F:test_group_by_topic_basic:test_group_by_topic_basic:0: Expected the number of students with topic {Other, 45} to be 1, was 0
+suites/oh_queue_suite.c:519:F:test_group_by_topic_different_topic_name_same_number:test_group_by_topic_different_topic_name_same_number:0: Expected the number of students with topic {Other, 2} to be 3, was 0
+suites/oh_queue_suite.c:580:F:test_group_by_topic_same_topic_different_number:test_group_by_topic_same_topic_different_number:0: Expected the number of students with topic {Assembly, 7} to be 4, was 0
+suites/oh_queue_suite.c:710:F:test_hash_1:test_hash_1:0: Assertion 'ciphertext[i] == actual[i]' failed: ciphertext[i] == 5432384, actual[i] == 1232
+suites/oh_queue_suite.c:726:F:test_hash_2:test_hash_2:0: Assertion 'ciphertext[i] == expected[i]' failed: ciphertext[i] == 2088, expected[i] == 213739
+suites/oh_queue_suite.c:778:F:test_update_student_basic:test_update_student_basic:0: Expected topicName to be 2, was 1
+suites/oh_queue_suite.c:821:F:test_update_student_no_student_with_custom_id:test_update_student_no_student_with_custom_id:0: Assertion 'retVal1 == 0' failed: retVal1 == 1, 0 == 0
+suites/oh_queue_suite.c:855:F:test_update_student_empty_array:test_update_student_empty_array:0: Assertion 'retVal1 == 0' failed: retVal1 == 1, 0 == 0
+suites/oh_queue_suite.c:886:F:test_remove_student_by_name_basic:test_remove_student_by_name_basic:0: Assertion 'oh_queue.stats.no_of_people_in_queue == 2' failed: oh_queue.stats.no_of_people_in_queue == 3, 2 == 2
+suites/oh_queue_suite.c:947:F:test_remove_student_by_name_no_students_with_name:test_remove_student_by_name_no_students_with_name:0: Assertion 'oh_queue.stats.no_of_people_in_queue == 3' failed: oh_queue.stats.no_of_people_in_queue == 4, 3 == 3
+suites/oh_queue_suite.c:996:F:test_remove_student_by_name_empty_array:test_remove_student_by_name_empty_array:0: Assertion 'retVal1 == 0' failed: retVal1 == 1, 0 == 0
+suites/oh_queue_suite.c:1027:F:test_remove_student_by_name_multiple:test_remove_student_by_name_multiple:0: Assertion 'oh_queue.stats.no_of_people_in_queue == 3' failed: oh_queue.stats.no_of_people_in_queue == 4, 3 == 3
+suites/oh_queue_suite.c:1090:F:test_remove_student_by_topic_basic:test_remove_student_by_topic_basic:0: Assertion 'oh_queue.stats.no_of_people_in_queue == 2' failed: oh_queue.stats.no_of_people_in_queue == 4, 2 == 2
+suites/oh_queue_suite.c:1149:F:test_remove_student_by_topic_no_student_with_topic:test_remove_student_by_topic_no_student_with_topic:0: Assertion 'retVal == 0' failed: retVal == 1, 0 == 0
+suites/oh_queue_suite.c:1204:F:test_remove_student_by_topic_empty_array:test_remove_student_by_topic_empty_array:0: Assertion 'retVal1 == 0' failed: retVal1 == 1, 0 == 0
+suites/oh_queue_suite.c:1226:F:test_office_hours_status_students_enqueueed:test_office_hours_status_students_enqueueed:0: Expected the queue status to be InProgress, was Completed
+suites/oh_queue_suite.c:1270:F:test_office_hours_status_some_students_removeped:test_office_hours_status_some_students_removeped:0: Expected the queue status to be InProgress, was Completed
+suites/oh_queue_suite.c:1300:F:test_office_hours_status_remove_some_students_by_topic:test_office_hours_status_remove_some_students_by_topic:0: Expected the queue status to be InProgress, was Completed
+suites/oh_queue_suite.c:1383:F:test_office_hours_status_remove_one_student_by_name:test_office_hours_status_remove_one_student_by_name:0: Expected the queue status to be InProgress, was Completed
+suites/my_string_suite.c:398:F:test_my_strncpy_basic:test_my_strncpy_basic:0: did not overwrite first byte of dest
+
+suites/my_string_suite.c:419:F:test_my_strncpy_destination_larger:test_my_strncpy_destination_larger:0: did not overwrite first byte of dest
+
+suites/my_string_suite.c:444:F:test_my_strncpy_random_basic_256:test_my_strncpy_random_basic_256:0: did not copy the first 256 characters of src to dest correctly
+
+suites/my_string_suite.c:472:F:test_my_strncpy_null_terminator_in_middle:test_my_strncpy_null_terminator_in_middle:0: Assertion 'strlen(dest) == strlen(src)' failed: strlen(dest) == 4, strlen(src) == 150
+suites/my_string_suite.c:497:F:test_my_strncpy_overwrite:test_my_strncpy_overwrite:0: did not overwrite destination completely
+
+suites/my_string_suite.c:523:F:test_my_strncpy_adv:test_my_strncpy_adv:0: did not overwrite destination completely
+
+suites/my_string_suite.c:553:F:test_my_strncat_basic:test_my_strncat_basic:0: Assertion 'strncmp(retVal, correctVal, strlen(correctVal)) == 0' failed: strncmp(retVal, correctVal, strlen(correctVal)) == -98, 0 == 0
+suites/my_string_suite.c:573:F:test_my_strncat_random:test_my_strncat_random:0: Assertion 'strncmp(retVal, correctVal, strlen(dest1)) == 0' failed: strncmp(retVal, correctVal, strlen(dest1)) == -81, 0 == 0
+suites/my_string_suite.c:593:F:test_my_strncat_null_terminator:test_my_strncat_null_terminator:0: Assertion 'strncmp(retVal, correctVal, 200) == 0' failed: strncmp(retVal, correctVal, 200) == -81, 0 == 0
+suites/my_string_suite.c:609:F:test_my_strncat_with_empty_string_first:test_my_strncat_with_empty_string_first:0: Assertion 'strncmp(empty, my_str, 400) == 0' failed: strncmp(empty, my_str, 400) == -81, 0 == 0
+suites/my_string_suite.c:644:F:test_my_memset_basic:test_my_memset_basic:0: Assertion 'strcmp(str,my_str) == 0' failed: strcmp(str,my_str) == -58, 0 == 0
+suites/my_string_suite.c:669:F:test_my_memset_random_n:test_my_memset_random_n:0: Assertion 'strcmp(str,my_str) == 0' failed: strcmp(str,my_str) == 34, 0 == 0
+suites/my_string_suite.c:686:F:test_my_memset_replace_char:test_my_memset_replace_char:0: Assertion 'replacedChar == '*'' failed: replacedChar == 107, '*' == 42
+suites/my_string_suite.c:701:F:test_my_memset_replace_all:test_my_memset_replace_all:0: Assertion 'arr == arr1' failed: arr == "QoMNUckLhytCmvXUDI8B1f8N9o86ZdvQBiDwuYiLwLoThlOU4Ww5bFTl31s3eYTQgxnLvFw2rVVIhJDlGarSPkeTlGXAERrVoOG", arr1 == ""
+suites/my_string_suite.c:717:F:test_remove_first_instance_basic:test_remove_first_instance_basic:0: Assertion 'test_str == "ac"' failed: test_str == "abc", "ac" == "ac"
+suites/my_string_suite.c:749:F:test_remove_first_instance_random:test_remove_first_instance_random:0: Assertion 'strncmp(test_str + i, orig_str + i + 1, sizeof(orig_str) - i) == 0' failed: strncmp(test_str + i, orig_str + i + 1, sizeof(orig_str) - i) == 31, 0 == 0
+suites/my_string_suite.c:767:F:test_remove_first_instance_instance_as_first_char:test_remove_first_instance_instance_as_first_char:0: Assertion 'test_str == orig_str + 1' failed: test_str == "QoMNUckLhytCmvXUDI8B1f8N9o86ZdvQBiDwuYiLwLoThlOU4Ww5bFTl31s3eYTQgxnLvFw2rVVIhJDlGarSPkeTlGXAERrVoOG", orig_str + 1 == "oMNUckLhytCmvXUDI8B1f8N9o86ZdvQBiDwuYiLwLoThlOU4Ww5bFTl31s3eYTQgxnLvFw2rVVIhJDlGarSPkeTlGXAERrVoOG"
+suites/my_string_suite.c:781:F:test_remove_first_instance_one_char_string:test_remove_first_instance_one_char_string:0: Assertion 'strlen(test_str) == 0' failed: strlen(test_str) == 1, 0 == 0
+suites/my_string_suite.c:825:F:test_remove_last_instance_basic:test_remove_last_instance_basic:0: Assertion 'test_str == "ac"' failed: test_str == "abc", "ac" == "ac"
+suites/my_string_suite.c:857:F:test_remove_last_instance_random:test_remove_last_instance_random:0: Assertion 'strncmp(test_str + i, orig_str + i + 1, sizeof(orig_str) - i - 1) == 0' failed: strncmp(test_str + i, orig_str + i + 1, sizeof(orig_str) - i - 1) == 6, 0 == 0
+suites/my_string_suite.c:876:F:test_remove_last_instance_instance_as_last_char:test_remove_last_instance_instance_as_last_char:0: Assertion 'test_str == orig_str' failed: test_str == "QoMNUckLhytCmvXUDI8B1f8N9o86ZdvQBiDwuYiLwLoThlOU4Ww5bFTl31s3eYTQgxnLvFw2rVVIhJDlGarSPkeTlGXAERrVoO", orig_str == "QoMNUckLhytCmvXUDI8B1f8N9o86ZdvQBiDwuYiLwLoThlOU4Ww5bFTl31s3eYTQgxnLvFw2rVVIhJDlGarSPkeTlGXAERrVoOG"
+suites/my_string_suite.c:890:F:test_remove_last_instance_one_char_string:test_remove_last_instance_one_char_string:0: Assertion 'strlen(test_str) == 0' failed: strlen(test_str) == 1, 0 == 0
+suites/my_string_suite.c:937:F:test_replace_character_with_string_basic:test_replace_character_with_string_basic:0: Assertion 'test_str == "aabcc"' failed: test_str == "abc", "aabcc" == "aabcc"
+suites/my_string_suite.c:972:F:test_replace_character_with_string_random:test_replace_character_with_string_random:0: Assertion 'strncmp(test_str + i, replace_str, strlen(replace_str)) == 0' failed: strncmp(test_str + i, replace_str, strlen(replace_str)) == -12, 0 == 0
+suites/my_string_suite.c:1041:F:test_replace_character_with_string_multiple_characters:test_replace_character_with_string_multiple_characters:0: Assertion 'strncmp(test_str + i, replace_str, strlen(replace_str)) == 0' failed: strncmp(test_str + i, replace_str, strlen(replace_str)) == -70, 0 == 0
+suites/my_string_suite.c:1077:F:test_replace_character_with_string_single_char_replace_string:test_replace_character_with_string_single_char_replace_string:0: Assertion 'strncmp(test_str + i, replace_str, strlen(replace_str)) == 0' failed: strncmp(test_str + i, replace_str, strlen(replace_str)) == -12, 0 == 0
+suites/my_string_suite.c:1115:F:test_replace_character_with_string_empty_replace_string:test_replace_character_with_string_empty_replace_string:0: Assertion 'strncmp(test_str + i + strlen(replace_str), orig_str + i + 1, sizeof(orig_str) - i) == 0' failed: strncmp(test_str + i + strlen(replace_str), orig_str + i + 1, sizeof(orig_str) - i) == -8, 0 == 0
+suites/my_string_suite.c:1130:F:test_remove_first_character_random:test_remove_first_character_random:0: Assertion 'test_str_non_array == orig_str + 1' failed: test_str_non_array == "QoMNUckLhytCmvXUDI8B1f8N9o86ZdvQBiDwuYiLwLoThlOU4Ww5bFTl31s3eYTQgxnLvFw2rVVIhJDlGarSPkeTlGXAERrVoOGUtdWV9SDqChMjrebhypaU67uLZVGnKmieAf9J7NaK4W3waeNJEXDL58w44csOzK39ZcT7Z3R40VAbaoUOmyzsG6wKiZzSKC2KPVSPYKUYFuaPT4EfDeHjke4DdEvYhxI7tAWrkQq0lBPeFttiIbC2pHFDlbBCJkJcVGEfx5gSG56mzAFhMhkbZ0PkbrXULH7GnMWURcNxiUUSuzagRusQuibGJ8BuPIbdu78mkVUCPOukoEBg946Emhk5qVAgELu9SCwcyqPofkJDZkT8p0MMi7RI3rZHdtR56niEO833sMG", orig_str + 1 == "oMNUckLhytCmvXUDI8B1f8N9o86ZdvQBiDwuYiLwLoThlOU4Ww5bFTl31s3eYTQgxnLvFw2rVVIhJDlGarSPkeTlGXAERrVoOGUtdWV9SDqChMjrebhypaU67uLZVGnKmieAf9J7NaK4W3waeNJEXDL58w44csOzK39ZcT7Z3R40VAbaoUOmyzsG6wKiZzSKC2KPVSPYKUYFuaPT4EfDeHjke4DdEvYhxI7tAWrkQq0lBPeFttiIbC2pHFDlbBCJkJcVGEfx5gSG56mzAFhMhkbZ0PkbrXULH7GnMWURcNxiUUSuzagRusQuibGJ8BuPIbdu78mkVUCPOukoEBg946Emhk5qVAgELu9SCwcyqPofkJDZkT8p0MMi7RI3rZHdtR56niEO833sMG"
+suites/my_string_suite.c:1143:F:test_remove_first_character_one_char_string:test_remove_first_character_one_char_string:0: Assertion 'test_str_non_array == orig_str + 1' failed: test_str_non_array == "Q", orig_str + 1 == ""
