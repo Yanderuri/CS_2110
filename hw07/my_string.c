@@ -1,7 +1,7 @@
 /**
  * @file my_string.c
- * @author YOUR NAME HERE
- * @collaborators NAMES OF PEOPLE THAT YOU COLLABORATED WITH HERE
+ * @author Vy Mai
+ * @collaborators Me, myself and I
  * @brief Your implementation of these famous 3 string.h library functions!
  *
  * NOTE: NO ARRAY NOTATION IS ALLOWED IN THIS FILE
@@ -19,18 +19,12 @@
  */
 size_t my_strlen(const char *s)
 {
-    /* Note about UNUSED_PARAM
-    *
-    * UNUSED_PARAM is used to avoid compiler warnings and errors regarding unused function
-    * parameters prior to implementing the function. Once you begin implementing this
-    * function, you can delete the UNUSED_PARAM lines.
-    */
     int ans = 0;
     while (*s != 0){
         s += sizeof(char);
         ans++;
     }
-    return ans;
+    return ans; 
 }
 
 /**
@@ -45,32 +39,22 @@ size_t my_strlen(const char *s)
  */
 int my_strncmp(const char *s1, const char *s2, size_t n)
 {
-    /* Note about UNUSED_PARAM
-    *
-    * UNUSED_PARAM is used to avoid compiler warnings and errors regarding unused function
-    * parameters prior to implementing the function. Once you begin implementing this
-    * function, you can delete the UNUSED_PARAM lines.
-    */
-    UNUSED_PARAM(s1);
-    UNUSED_PARAM(s2);
-    UNUSED_PARAM(n);
     if (s1 == s2){
         return 0;
     }
-    long unsigned int i = 0;
-    while (i < n){
-        if (*s1 < *s2){
-           return -1; 
-        }
-        if (*s1 > *s2){
-            return 1;
-        }
+    while (n > 0){
         if (*s1 == *s2 && *s1 == 0){
             return 0;
         }
+        else if (*s1 < *s2){
+           return -1; 
+        }
+        else if (*s1 > *s2){
+            return 1;
+        }
         s1 += sizeof(char);
         s2 += sizeof(char);
-        i++;
+        n--;
     }
     return 0;
 }
@@ -85,19 +69,17 @@ int my_strncmp(const char *s1, const char *s2, size_t n)
  */
 char *my_strncpy(char *dest, const char *src, size_t n)
 {
-    /* Note about UNUSED_PARAM
-    *
-    * UNUSED_PARAM is used to avoid compiler warnings and errors regarding unused function
-    * parameters prior to implementing the function. Once you begin implementing this
-    * function, you can delete the UNUSED_PARAM lines.
-    */
-    char* results = &*dest;
+    char* result = dest;
     while(n > 0){
+        *dest = *src;
+        if (*src == 0){
+            return result;
+        }
         src += sizeof(char);
         dest += sizeof(char);
         n--;
     }
-    return results;
+    return result;
 }
 
 /**
@@ -111,16 +93,18 @@ char *my_strncpy(char *dest, const char *src, size_t n)
  */
 char *my_strncat(char *dest, const char *src, size_t n)
 {
-    /* Note about UNUSED_PARAM
-    *
-    * UNUSED_PARAM is used to avoid compiler warnings and errors regarding unused function
-    * parameters prior to implementing the function. Once you begin implementing this
-    * function, you can delete the UNUSED_PARAM lines.
-    */
-    UNUSED_PARAM(dest);
-    UNUSED_PARAM(src);
-    UNUSED_PARAM(n);
-    return dest;
+    char* result = dest;
+    dest += my_strlen(dest);
+    while(n > 0){        
+        *dest = *src;
+        if (*src == 0){
+            return result;
+        }
+        dest += sizeof(char);
+        src += sizeof(char);
+        n--;
+    }
+    return result;
 }
 
 /**
@@ -134,16 +118,15 @@ char *my_strncat(char *dest, const char *src, size_t n)
  */
 void *my_memset(void *str, int c, size_t n)
 {
-    /* Note about UNUSED_PARAM
-    *
-    * UNUSED_PARAM is used to avoid compiler warnings and errors regarding unused function
-    * parameters prior to implementing the function. Once you begin implementing this
-    * function, you can delete the UNUSED_PARAM lines.
-    */
     UNUSED_PARAM(str);
     UNUSED_PARAM(c);
     UNUSED_PARAM(n);
-    
+    char *pstr = str;
+    while (n > 0){
+        *pstr = c;
+        pstr += sizeof(char);
+        n--;
+    }
     return NULL;
 }
 
@@ -155,15 +138,18 @@ void *my_memset(void *str, int c, size_t n)
  * @param c The character we are looking to delete
  */
 void remove_first_instance(char *str, char c){
-    /* Note about UNUSED_PARAM
-    *
-    * UNUSED_PARAM is used to avoid compiler warnings and errors regarding unused function
-    * parameters prior to implementing the function. Once you begin implementing this
-    * function, you can delete the UNUSED_PARAM lines.
-    */
     UNUSED_PARAM(str);
     UNUSED_PARAM(c);
-    
+    char* curr = &*str;
+    short i = 1;
+    while (*str != 0){
+        if (i > 0 && *str == c){
+            str += sizeof(char);
+        }
+        *curr = *str;
+        str += sizeof(char);
+        curr += sizeof(char);
+    }
     return;
 }
 
@@ -175,12 +161,6 @@ void remove_first_instance(char *str, char c){
  * @param c The character we are looking to delete
  */
 void remove_last_instance(char *str, char c){
-    /* Note about UNUSED_PARAM
-    *
-    * UNUSED_PARAM is used to avoid compiler warnings and errors regarding unused function
-    * parameters prior to implementing the function. Once you begin implementing this
-    * function, you can delete the UNUSED_PARAM lines.
-    */
     UNUSED_PARAM(str);
     UNUSED_PARAM(c);
     
@@ -196,12 +176,6 @@ void remove_last_instance(char *str, char c){
  * @param replaceStr The pointer to the string we are replacing c with
  */
 void replace_character_with_string(char *str, char c, char *replaceStr) {
-    /* Note about UNUSED_PARAM
-    *
-    * UNUSED_PARAM is used to avoid compiler warnings and errors regarding unused function
-    * parameters prior to implementing the function. Once you begin implementing this
-    * function, you can delete the UNUSED_PARAM lines.
-    */
     UNUSED_PARAM(str);
     UNUSED_PARAM(c);
     UNUSED_PARAM(replaceStr);
@@ -215,13 +189,6 @@ void replace_character_with_string(char *str, char c, char *replaceStr) {
  * @param str A pointer to a pointer of the string
  */
 void remove_first_character(char **str) {
-    /* Note about UNUSED_PARAM
-    *
-    * UNUSED_PARAM is used to avoid compiler warnings and errors regarding unused function
-    * parameters prior to implementing the function. Once you begin implementing this
-    * function, you can delete the UNUSED_PARAM lines.
-    */
-    UNUSED_PARAM(str);
-    
+    *str += sizeof(char);
     return;
 }
