@@ -11,6 +11,7 @@
 
 #include <stddef.h>
 #include "my_string.h"
+#define CHAR_INC(a) ((a) += (sizeof(char)));
 /**
  * @brief Calculate the length of a string
  *
@@ -118,9 +119,6 @@ char *my_strncat(char *dest, const char *src, size_t n)
  */
 void *my_memset(void *str, int c, size_t n)
 {
-    UNUSED_PARAM(str);
-    UNUSED_PARAM(c);
-    UNUSED_PARAM(n);
     char *pstr = str;
     while (n > 0){
         *pstr = c;
@@ -138,18 +136,18 @@ void *my_memset(void *str, int c, size_t n)
  * @param c The character we are looking to delete
  */
 void remove_first_instance(char *str, char c){
-    UNUSED_PARAM(str);
-    UNUSED_PARAM(c);
     char* curr = &*str;
     short i = 1;
     while (*str != 0){
         if (i > 0 && *str == c){
             str += sizeof(char);
+            i--;
         }
         *curr = *str;
         str += sizeof(char);
         curr += sizeof(char);
     }
+    *curr = 0;
     return;
 }
 
@@ -161,9 +159,17 @@ void remove_first_instance(char *str, char c){
  * @param c The character we are looking to delete
  */
 void remove_last_instance(char *str, char c){
-    UNUSED_PARAM(str);
-    UNUSED_PARAM(c);
-    
+    char *last = NULL;
+    while (*str != 0){
+        if (*str == c){
+            last = str;
+        }
+        str += sizeof(char);
+    }
+    while (last != NULL && *last != 0){
+        *last = *(last + sizeof(char));
+        last += sizeof(char);
+    }
     return;
 }
 
@@ -176,10 +182,39 @@ void remove_last_instance(char *str, char c){
  * @param replaceStr The pointer to the string we are replacing c with
  */
 void replace_character_with_string(char *str, char c, char *replaceStr) {
-    UNUSED_PARAM(str);
-    UNUSED_PARAM(c);
-    UNUSED_PARAM(replaceStr);
+    char * last = NULL;
+    int replacement_size = my_strlen(replaceStr);
+    if (*replaceStr == 0 || replacement_size == 0){
+        return;
+    }
+    while(*str != 0){
+        if (*str == c){
+            last = str;
+        }
+        CHAR_INC(str);
+    }
+    // after this loop terminates, str should be at the null-terminator.
+    // last should point to the last ocurrence of character.
+    if (last == NULL){
+        return;
+    }
+    if (replacement_size == 1){
+        *last = *replaceStr;
+        *str = 0;
+        return;
+    }
+    // int leftover_size = my_strlen(last + sizeof(char));
     
+    while(str > last){  // while the address of str is bigger than the address of last_occurence
+        *((str) + ((replacement_size-1) * sizeof(char))) = *str;
+        str -= sizeof(char);
+    }
+    while(replacement_size > 0){
+        *last = *replaceStr;
+        CHAR_INC(last);
+        CHAR_INC(replaceStr);
+        replacement_size--;
+    }
     return;
 }
 
