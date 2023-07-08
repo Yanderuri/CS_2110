@@ -1,6 +1,6 @@
 Running suite(s): oh_queue_suite
  my_string_suite
-58%: Checks: 81, Failures: 34, Errors: 0
+62%: Checks: 81, Failures: 30, Errors: 0
 suites/oh_queue_suite.c:72:F:test_enqueue_single:test_enqueue_single:0: Expected no_of_people_in_queue to be 1 after inserting into empty users, was 0
 suites/oh_queue_suite.c:110:F:test_enqueue_two:test_enqueue_two:0: Expected no_of_people_in_queue to be 2 after inserting into users, was 0
 suites/oh_queue_suite.c:151:F:test_enqueue_multiple:test_enqueue_multiple:0: Expected no_of_people_in_queue to be 25 after enqueueing 25 users, was 0
@@ -31,7 +31,3 @@ suites/oh_queue_suite.c:1226:F:test_office_hours_status_students_enqueueed:test_
 suites/oh_queue_suite.c:1270:F:test_office_hours_status_some_students_removeped:test_office_hours_status_some_students_removeped:0: Expected the queue status to be InProgress, was Completed
 suites/oh_queue_suite.c:1300:F:test_office_hours_status_remove_some_students_by_topic:test_office_hours_status_remove_some_students_by_topic:0: Expected the queue status to be InProgress, was Completed
 suites/oh_queue_suite.c:1383:F:test_office_hours_status_remove_one_student_by_name:test_office_hours_status_remove_one_student_by_name:0: Expected the queue status to be InProgress, was Completed
-suites/my_string_suite.c:972:F:test_replace_character_with_string_random:test_replace_character_with_string_random:0: Assertion 'strncmp(test_str + i, replace_str, strlen(replace_str)) == 0' failed: strncmp(test_str + i, replace_str, strlen(replace_str)) == -51, 0 == 0
-suites/my_string_suite.c:1041:F:test_replace_character_with_string_multiple_characters:test_replace_character_with_string_multiple_characters:0: Assertion 'strncmp(test_str + i, replace_str, strlen(replace_str)) == 0' failed: strncmp(test_str + i, replace_str, strlen(replace_str)) == -32, 0 == 0
-suites/my_string_suite.c:1077:F:test_replace_character_with_string_single_char_replace_string:test_replace_character_with_string_single_char_replace_string:0: Assertion 'strncmp(test_str + i, replace_str, strlen(replace_str)) == 0' failed: strncmp(test_str + i, replace_str, strlen(replace_str)) == -51, 0 == 0
-suites/my_string_suite.c:1115:F:test_replace_character_with_string_empty_replace_string:test_replace_character_with_string_empty_replace_string:0: Assertion 'strncmp(test_str + i + strlen(replace_str), orig_str + i + 1, sizeof(orig_str) - i) == 0' failed: strncmp(test_str + i + strlen(replace_str), orig_str + i + 1, sizeof(orig_str) - i) == -42, 0 == 0

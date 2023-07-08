@@ -182,36 +182,37 @@ void remove_last_instance(char *str, char c){
  * @param replaceStr The pointer to the string we are replacing c with
  */
 void replace_character_with_string(char *str, char c, char *replaceStr) {
-    char * last = NULL;
+    char * first = NULL;
     int replacement_size = my_strlen(replaceStr);
     if (*replaceStr == 0 || replacement_size == 0){
+        remove_first_instance(str, c);
         return;
     }
+    int i = 1;
     while(*str != 0){
-        if (*str == c){
-            last = str;
+        if (i > 0 && *str == c){
+            first = str;
+            i--;
         }
         CHAR_INC(str);
     }
     // after this loop terminates, str should be at the null-terminator.
     // last should point to the last ocurrence of character.
-    if (last == NULL){
+    if (first == NULL){
         return;
     }
     if (replacement_size == 1){
-        *last = *replaceStr;
+        *first = *replaceStr;
         *str = 0;
         return;
     }
-    // int leftover_size = my_strlen(last + sizeof(char));
-    
-    while(str > last){  // while the address of str is bigger than the address of last_occurence
+    while(str > first){  // while the address of str is bigger than the address of last_occurence
         *((str) + ((replacement_size-1) * sizeof(char))) = *str;
         str -= sizeof(char);
     }
     while(replacement_size > 0){
-        *last = *replaceStr;
-        CHAR_INC(last);
+        *first = *replaceStr;
+        CHAR_INC(first);
         CHAR_INC(replaceStr);
         replacement_size--;
     }
