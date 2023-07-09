@@ -4,6 +4,7 @@
 
 struct Queue oh_queue;
 
+
 /** enqueue
  * @brief Create a new student and enqueue him
  * onto the OH queue
@@ -14,11 +15,27 @@ struct Queue oh_queue;
  * @return FAILURE if the queue is already at max length, SUCCESS otherwise
  */
 int enqueue(const char *studentName, const enum subject topicName, const float questionNumber, struct public_key pub_key){
-    UNUSED_PARAM(studentName);
-    UNUSED_PARAM(topicName);
-    UNUSED_PARAM(questionNumber);
-    UNUSED_PARAM(pub_key);
-
+    if (studentName == NULL || *studentName == 0 || oh_queue.stats.no_of_people_in_queue == MAX_QUEUE_LENGTH){
+        return FAILURE;
+    }
+    struct Student student_to_be_added;
+    short i = 1;
+    char *name = student_to_be_added.studentData.name;
+    while(i < MAX_NAME_LENGTH && *studentName != 0){
+        *name = *studentName;
+        name += sizeof(char);
+        studentName += sizeof(char);
+        i++;
+    }
+    *name = 0;
+    student_to_be_added.studentData.topic.topicName = topicName;
+    student_to_be_added.studentData.topic.questionNumber = questionNumber;
+    OfficeHoursStatus(oh_queue.stats.currentStatus);
+    student_to_be_added.queue_number = oh_queue.stats.no_of_people_in_queue;
+    hash(student_to_be_added.customID, student_to_be_added.studentData.name, pub_key);
+    oh_queue.students[student_to_be_added.queue_number] = student_to_be_added;
+    oh_queue.stats.no_of_people_visited+=1;
+    oh_queue.stats.no_of_people_in_queue+=1;
     return SUCCESS;
 }
 
@@ -27,6 +44,16 @@ int enqueue(const char *studentName, const enum subject topicName, const float q
  * @return FAILURE if the queue is already at empty, SUCCESS otherwise
  */
 int dequeue(void) {
+    if (oh_queue.stats.no_of_people_in_queue == 0){
+        return FAILURE;
+    }
+    // 1 writes into 0, 2 writes into 1, 3 writes into 2...30 writes into 29, null writes into 30.
+    short i = 0;
+    while (i < oh_queue.stats.no_of_people_in_queue-1){ // if there's 1 person in queue, this loop shouldn't run, and the element to be dequeue will be null.
+        oh_queue.students[i] = oh_queue.students[i+1];
+    }
+    oh_queue.stats.no_of_people_in_queue--;
+    OfficeHoursStatus(oh_queue.stats.currentStatus);
     return SUCCESS;
 }
 
@@ -51,10 +78,12 @@ int group_by_topic(struct Topic topic, struct Student *grouped[]) {
  * @param pub_key public key used for calculating the hash
  */
 void hash(int *ciphertext, char *plaintext, struct public_key pub_key) {
-    UNUSED_PARAM(ciphertext);
-    UNUSED_PARAM(plaintext);
-    UNUSED_PARAM(pub_key);
-
+    char *start = plaintext;
+    while(*start != 0){
+        *ciphertext = power_and_mod(*start, pub_key.e, pub_key.n);
+        start += sizeof(char);
+        ciphertext += sizeof(char);
+    }
     return;
 }
 
@@ -100,9 +129,16 @@ int remove_student_by_topic(struct Topic topic) {
  * you are to update
  */
 void OfficeHoursStatus(struct OfficeHoursStats* resultStats ){
-    UNUSED_PARAM(resultStats);
-
-    return;
+    // enum status temp = oh_queue.stats.currentStatus;
+    if (oh_queue.stats.no_of_people_in_queue != 0 && 
+    my_strncmp(oh_queue.stats.no_of_people_in_queue, "C", 1) == 0){
+        oh_queue.stats.currentStatus = "InProgress";
+        return;
+    }
+    if (oh_queue.stats.no_of_people_in_queue == 0 && my_strncmp(oh_queue.stats.no_of_people_in_queue, "I", 1) == 0){
+        oh_queue.stats.currentStatus = "Completed";
+        return;
+    }
 }
 
 /*
