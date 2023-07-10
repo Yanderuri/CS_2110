@@ -30,7 +30,7 @@ int enqueue(const char *studentName, const enum subject topicName, const float q
         i++;
     }
     *name = 0;
-    student_to_be_added.studentData.topic.topicName = (enum subject) topicName;
+    student_to_be_added.studentData.topic.topicName = topicName;
     student_to_be_added.studentData.topic.questionNumber = questionNumber;
     student_to_be_added.queue_number = oh_queue.stats.no_of_people_visited + oh_queue.stats.no_of_people_in_queue;
     hash(student_to_be_added.customID, student_to_be_added.studentData.name, pub_key);
@@ -50,14 +50,13 @@ int dequeue(void) {
     }
     // 1 writes into 0, 2 writes into 1, 3 writes into 2...30 writes into 29, null writes into 30.
     short i = 0;
-    // if there's 1 person in queue, this loop shouldn't run, and the element to be dequeue will be null.
-    while (i < oh_queue.stats.no_of_people_in_queue-1){ 
+    // nullify_student(&oh_queue.students[i]);
+    while (i < oh_queue.stats.no_of_people_in_queue - 1){ // if there's 1 person in queue, this loop shouldn't run, and the element to be dequeue will be null.
         oh_queue.students[i] = oh_queue.students[i+1];
         i++;
     }
     // nullify the last element in the queue
     nullify_student(&oh_queue.students[i]);
-
     oh_queue.stats.no_of_people_in_queue -= 1;
     oh_queue.stats.no_of_people_visited += 1;
     OfficeHoursStatus(&oh_queue.stats);
@@ -78,7 +77,9 @@ int group_by_topic(struct Topic topic, struct Student *grouped[]) {
     short i = 0;
     short j = 0;
     while (i < oh_queue.stats.no_of_people_in_queue){
-        if ((oh_queue.students[i].studentData.topic.topicName == topic.topicName || (enum subject) topic.topicName == (enum subject) oh_queue.students[i].studentData.topic.topicName) && oh_queue.students[i].studentData.topic.questionNumber == topic.questionNumber){
+        if ((oh_queue.students[i].studentData.topic.topicName == topic.topicName
+        || (enum subject) topic.topicName == (enum subject) oh_queue.students[i].studentData.topic.topicName) 
+        && oh_queue.students[i].studentData.topic.questionNumber == topic.questionNumber){
             grouped[j] = &oh_queue.students[i];
             j++;
         }
@@ -127,11 +128,12 @@ int update_student(struct Topic newTopic, int *customID) {
  * @param name the name you are searching for
  * @return FAILURE if no student is matched, SUCCESS otherwise
  */
-int remove_student_by_name(char *name){
+int remove_student_by_name(char *input_name){
     short i = 0;
     while (i < oh_queue.stats.no_of_people_in_queue){
-        if (my_strncmp(oh_queue.students[i].studentData.name, name, my_strlen(name)) == 0){
+        if (my_strncmp(oh_queue.students[i].studentData.name, input_name, my_strlen(oh_queue.students->studentData.name)) == 0){
             short j = i;
+            nullify_student(&oh_queue.students[j]);
             while (j < oh_queue.stats.no_of_people_in_queue-1){ 
                 oh_queue.students[j] = oh_queue.students[j+1];
                 j++;
@@ -154,22 +156,31 @@ int remove_student_by_name(char *name){
  * @return FAILURE if no student is matched, SUCCESS otherwise
  */
 int remove_student_by_topic(struct Topic topic) {
-    //create a struct student array
-    //call group_by_topic and store the students pointers in the array
-    //iterate through the array and remove them customID
-    struct Student *grouped[MAX_QUEUE_LENGTH];
-    short students_removed = 0;
-    short i = 0;
-    short no_of_students = group_by_topic(topic, grouped);
-    while (i < no_of_students){
-        if (remove_student_by_name(grouped[i]->studentData.name) == SUCCESS){
-            students_removed++;
+    // create a new empty struct Student array
+    // copy over every student in the queue that doesn't match the topic
+    // then redirect the queue to the new array
+    // return FAILURE if no student is matched, SUCCESS otherwise
+    short i = 0; // i iterates through the original array
+    short j = 0; // j iterates through the new array
+    struct Student new_queue[MAX_QUEUE_LENGTH];
+    while (i < oh_queue.stats.no_of_people_in_queue){
+        if (oh_queue.students[i].studentData.topic.topicName != topic.topicName || oh_queue.students[i].studentData.topic.questionNumber != topic.questionNumber){
+            new_queue[j] = oh_queue.students[i];
+            j++;
         }
         i++;
     }
-    if (students_removed == 0){
+    if (j == i){
         return FAILURE;
     }
+    oh_queue.stats.no_of_people_in_queue = j;
+    oh_queue.stats.no_of_people_visited += (i-j);
+    i = 0;
+    while (i < j){
+        oh_queue.students[i] = new_queue[i];
+        i++;
+    }
+    OfficeHoursStatus(&oh_queue.stats);
     return SUCCESS;
 }
 /** OfficeHoursStatus
@@ -179,12 +190,13 @@ int remove_student_by_topic(struct Topic topic) {
  * you are to update
  */
 void OfficeHoursStatus(struct OfficeHoursStats* resultStats){
-    if (oh_queue.stats.no_of_people_in_queue <= 0 && my_strncmp(resultStats->currentStatus, "I", 1) == 0){
+    if (resultStats->no_of_people_in_queue == 0 && my_strncmp(resultStats->currentStatus, "I", 1) == 0){
         resultStats->currentStatus = "Completed";
     }
-    if (oh_queue.stats.no_of_people_in_queue > 0 && my_strncmp(resultStats->currentStatus, "C", 1) == 0){
+    if (resultStats->no_of_people_in_queue > 0 && my_strncmp(resultStats->currentStatus, "C", 1) == 0){
         resultStats->currentStatus = "InProgress";
     }
+    return;
 }
 
 /*
