@@ -5,6 +5,8 @@
 struct Queue oh_queue;
 
 
+void nullify_student(struct Student* student);
+
 /** enqueue
  * @brief Create a new student and enqueue him
  * onto the OH queue
@@ -33,7 +35,6 @@ int enqueue(const char *studentName, const enum subject topicName, const float q
     student_to_be_added.queue_number = oh_queue.stats.no_of_people_in_queue;
     hash(student_to_be_added.customID, student_to_be_added.studentData.name, pub_key);
     oh_queue.students[student_to_be_added.queue_number] = student_to_be_added;
-    oh_queue.stats.no_of_people_visited+=1;
     oh_queue.stats.no_of_people_in_queue+=1;
     OfficeHoursStatus(&oh_queue.stats);
     return SUCCESS;
@@ -51,8 +52,13 @@ int dequeue(void) {
     short i = 0;
     while (i < oh_queue.stats.no_of_people_in_queue-1){ // if there's 1 person in queue, this loop shouldn't run, and the element to be dequeue will be null.
         oh_queue.students[i] = oh_queue.students[i+1];
+        i++;
     }
-    oh_queue.stats.no_of_people_in_queue--;
+    // nullify the last element in the queue
+    nullify_student(&oh_queue.students[i]);
+
+    oh_queue.stats.no_of_people_in_queue -= 1;
+    oh_queue.stats.no_of_people_visited += 1;
     OfficeHoursStatus(&oh_queue.stats);
     return SUCCESS;
 }
@@ -64,11 +70,20 @@ int dequeue(void) {
  * @param grouped an array of pointers to students
  * @return the number of students matched
  */
-int group_by_topic(struct Topic topic, struct Student *grouped[]) { 
-    UNUSED_PARAM(topic);
-    UNUSED_PARAM(grouped);
 
-    return 0;
+int group_by_topic(struct Topic topic, struct Student *grouped[]) {
+    // iterate through queue, if topic matches, add student to grouped
+    // return the number of students matched
+    short i = 0;
+    short j = 0;
+    while (i < oh_queue.stats.no_of_people_in_queue){
+        if (oh_queue.students[i].studentData.topic.topicName == topic.topicName){
+            grouped[j] = &oh_queue.students[i];
+            j++;
+        }
+        i++;
+    }
+    return j;
 }
 
 /** hash
@@ -94,10 +109,16 @@ void hash(int *ciphertext, char *plaintext, struct public_key pub_key) {
  * @return FAILURE if no student is matched, SUCCESS otherwise
  */
 int update_student(struct Topic newTopic, int *customID) {
-    UNUSED_PARAM(newTopic);
-    UNUSED_PARAM(customID);
-    
-    return SUCCESS;
+    // iterate through queue, if customID matches, update topic
+    short i = 0;
+    while(i < oh_queue.stats.no_of_people_in_queue){
+        if (*oh_queue.students[i].customID == *customID){
+            oh_queue.students[i].studentData.topic = newTopic;
+            return SUCCESS;
+        }
+        i++;
+    }
+    return FAILURE;
 }
 
 /** remove_student_by_name
@@ -106,9 +127,24 @@ int update_student(struct Topic newTopic, int *customID) {
  * @return FAILURE if no student is matched, SUCCESS otherwise
  */
 int remove_student_by_name(char *name){
-    UNUSED_PARAM(name);
-
-    return SUCCESS;
+    short i = 0;
+    while (i < oh_queue.stats.no_of_people_in_queue){
+        if (my_strncmp(oh_queue.students[i].studentData.name, name, my_strlen(name)) == 0){
+            short j = i;
+            while (j < oh_queue.stats.no_of_people_in_queue-1){ 
+                oh_queue.students[j] = oh_queue.students[j+1];
+                j++;
+            }
+            // j was the last element in the queue, so we need to nullify it.
+            nullify_student(&oh_queue.students[j]);
+            oh_queue.stats.no_of_people_in_queue -= 1;
+            oh_queue.stats.no_of_people_visited += 1;   
+            OfficeHoursStatus(&oh_queue.stats);
+            return SUCCESS;
+        }
+        i++;
+    }
+    return FAILURE;
 }
 
 /** remove_student_by_topic
@@ -117,8 +153,22 @@ int remove_student_by_name(char *name){
  * @return FAILURE if no student is matched, SUCCESS otherwise
  */
 int remove_student_by_topic(struct Topic topic) {
-    UNUSED_PARAM(topic);
-
+    //create a struct student array
+    //call group_by_topic and store the number of students in the array
+    //iterate through the array and call remove_student_by_name
+    struct Student *grouped[MAX_QUEUE_LENGTH];
+    short students_removed = 0;
+    short i = 0;
+    short no_of_students = group_by_topic(topic, grouped);
+    while (i < no_of_students){
+        if (remove_student_by_name(grouped[i]->studentData.name) == SUCCESS){
+            students_removed++;
+        }
+        i++;
+    }
+    if (students_removed == 0){
+        return FAILURE;
+    }
     return SUCCESS;
 }
 
@@ -128,17 +178,14 @@ int remove_student_by_topic(struct Topic topic) {
  * @param resultStats A pointer the OfficeHoursStats variable
  * you are to update
  */
-void OfficeHoursStatus(struct OfficeHoursStats* resultStats ){
-    // enum status temp = oh_queue.stats.currentStatus;
-    if (oh_queue.stats.no_of_people_in_queue != 0 && 
-    my_strncmp(oh_queue.stats.currentStatus, "C", 1) == 0){
-        resultStats->currentStatus = "InProgress";
-        return;
-    }
-    if (oh_queue.stats.no_of_people_in_queue == 0 && my_strncmp(oh_queue.stats.currentStatus, "I", 1) == 0){
+void OfficeHoursStatus(struct OfficeHoursStats* resultStats){
+    if (oh_queue.stats.no_of_people_in_queue == 0){
         resultStats->currentStatus = "Completed";
-        return;
     }
+    if (oh_queue.stats.no_of_people_in_queue > 0){
+        resultStats->currentStatus = "InProgress";
+    }
+
 }
 
 /*
@@ -153,4 +200,22 @@ int power_and_mod(int b, int e, int n) {
         }
     }
     return (int) (currNum % n);
+}
+/*
+Short function to nullify the student struct from the pointer
+*/
+void nullify_student(struct Student* student){
+    short i = 0;
+    while (i < MAX_NAME_LENGTH){
+        student->studentData.name[i] = 0;
+        i++;
+    }
+    student->studentData.topic.topicName = Other;
+    student->studentData.topic.questionNumber = 0;
+    student->queue_number = 0;
+    i = 0;
+    while (i < 30){
+        student->customID[i] = 0;
+        i++;
+    }
 }

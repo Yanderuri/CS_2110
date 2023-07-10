@@ -1,23 +1,5 @@
 Running suite(s): oh_queue_suite
  my_string_suite
-75%: Checks: 81, Failures: 20, Errors: 0
-suites/oh_queue_suite.c:302:F:test_remove_basic:test_remove_basic:0: Expected no_of_people_visited to be 1 after enqueueing 5 users and removing 1, was 0
-suites/oh_queue_suite.c:342:F:test_remove_single_student:test_remove_single_student:0: Expected no_of_people_visited to be 1 after enqueueing 1 user and removing 1, was 0
-suites/oh_queue_suite.c:381:F:test_remove_multiple:test_remove_multiple:0: Expected no_of_people_visited to be 4 after enqueueing 10 users and removing 4, was 0
-suites/oh_queue_suite.c:424:F:test_remove_everything:test_remove_everything:0: Expected no_of_people_visited to be 10 after enqueueing 10 users and removeping 10, was 0
-suites/oh_queue_suite.c:455:F:test_group_by_topic_basic:test_group_by_topic_basic:0: Expected the number of students with topic {Other, 45} to be 1, was 0
-suites/oh_queue_suite.c:519:F:test_group_by_topic_different_topic_name_same_number:test_group_by_topic_different_topic_name_same_number:0: Expected the number of students with topic {Other, 2} to be 3, was 0
-suites/oh_queue_suite.c:580:F:test_group_by_topic_same_topic_different_number:test_group_by_topic_same_topic_different_number:0: Expected the number of students with topic {Assembly, 7} to be 4, was 0
-suites/oh_queue_suite.c:778:F:test_update_student_basic:test_update_student_basic:0: Expected topicName to be 2, was 1
-suites/oh_queue_suite.c:821:F:test_update_student_no_student_with_custom_id:test_update_student_no_student_with_custom_id:0: Assertion 'retVal1 == 0' failed: retVal1 == 1, 0 == 0
-suites/oh_queue_suite.c:855:F:test_update_student_empty_array:test_update_student_empty_array:0: Assertion 'retVal1 == 0' failed: retVal1 == 1, 0 == 0
-suites/oh_queue_suite.c:886:F:test_remove_student_by_name_basic:test_remove_student_by_name_basic:0: Assertion 'oh_queue.stats.no_of_people_in_queue == 2' failed: oh_queue.stats.no_of_people_in_queue == 3, 2 == 2
-suites/oh_queue_suite.c:947:F:test_remove_student_by_name_no_students_with_name:test_remove_student_by_name_no_students_with_name:0: Assertion 'oh_queue.stats.no_of_people_in_queue == 3' failed: oh_queue.stats.no_of_people_in_queue == 4, 3 == 3
-suites/oh_queue_suite.c:996:F:test_remove_student_by_name_empty_array:test_remove_student_by_name_empty_array:0: Assertion 'retVal1 == 0' failed: retVal1 == 1, 0 == 0
-suites/oh_queue_suite.c:1027:F:test_remove_student_by_name_multiple:test_remove_student_by_name_multiple:0: Assertion 'oh_queue.stats.no_of_people_in_queue == 3' failed: oh_queue.stats.no_of_people_in_queue == 4, 3 == 3
-suites/oh_queue_suite.c:1090:F:test_remove_student_by_topic_basic:test_remove_student_by_topic_basic:0: Assertion 'oh_queue.stats.no_of_people_in_queue == 2' failed: oh_queue.stats.no_of_people_in_queue == 4, 2 == 2
-suites/oh_queue_suite.c:1149:F:test_remove_student_by_topic_no_student_with_topic:test_remove_student_by_topic_no_student_with_topic:0: Assertion 'retVal == 0' failed: retVal == 1, 0 == 0
-suites/oh_queue_suite.c:1204:F:test_remove_student_by_topic_empty_array:test_remove_student_by_topic_empty_array:0: Assertion 'retVal1 == 0' failed: retVal1 == 1, 0 == 0
-suites/oh_queue_suite.c:1270:F:test_office_hours_status_some_students_removeped:test_office_hours_status_some_students_removeped:0: Expected the queue status to be InProgress, was Completed
-suites/oh_queue_suite.c:1300:F:test_office_hours_status_remove_some_students_by_topic:test_office_hours_status_remove_some_students_by_topic:0: Expected the queue status to be InProgress, was Completed
-suites/oh_queue_suite.c:1383:F:test_office_hours_status_remove_one_student_by_name:test_office_hours_status_remove_one_student_by_name:0: Expected the queue status to be InProgress, was Completed
+97%: Checks: 81, Failures: 2, Errors: 0
+suites/oh_queue_suite.c:580:F:test_group_by_topic_same_topic_different_number:test_group_by_topic_same_topic_different_number:0: Expected the number of students with topic {Assembly, 7} to be 4, was 8
+suites/oh_queue_suite.c:1112:F:test_remove_student_by_topic_basic:test_remove_student_by_topic_basic:0: Expected topicName to be 3, was 0
