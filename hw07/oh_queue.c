@@ -30,7 +30,7 @@ int enqueue(const char *studentName, const enum subject topicName, const float q
         i++;
     }
     *name = 0;
-    student_to_be_added.studentData.topic.topicName = topicName;
+    student_to_be_added.studentData.topic.topicName = (enum subject) topicName;
     student_to_be_added.studentData.topic.questionNumber = questionNumber;
     student_to_be_added.queue_number = oh_queue.stats.no_of_people_visited + oh_queue.stats.no_of_people_in_queue;
     hash(student_to_be_added.customID, student_to_be_added.studentData.name, pub_key);
@@ -77,7 +77,8 @@ int group_by_topic(struct Topic topic, struct Student *grouped[]) {
     short i = 0;
     short j = 0;
     while (i < oh_queue.stats.no_of_people_in_queue){
-        if (oh_queue.students[i].studentData.topic.topicName == topic.topicName && oh_queue.students[i].studentData.topic.questionNumber == topic.questionNumber){
+        if (
+            (oh_queue.students[i].studentData.topic.topicName == topic.topicName || (enum subject) topic.topicName == (enum subject) oh_queue.students[i].studentData.topic.topicName) && oh_queue.students[i].studentData.topic.questionNumber == topic.questionNumber){
             grouped[j] = &oh_queue.students[i];
             j++;
         }
@@ -179,10 +180,10 @@ int remove_student_by_topic(struct Topic topic) {
  * you are to update
  */
 void OfficeHoursStatus(struct OfficeHoursStats* resultStats){
-    if (oh_queue.stats.no_of_people_in_queue == 0){
+    if (oh_queue.stats.no_of_people_in_queue == 0 && my_strncmp(resultStats->currentStatus, "I", 1) == 0){
         resultStats->currentStatus = "Completed";
     }
-    if (oh_queue.stats.no_of_people_in_queue > 0){
+    if (oh_queue.stats.no_of_people_in_queue > 0 && my_strncmp(resultStats->currentStatus, "C", 1) == 0){
         resultStats->currentStatus = "InProgress";
     }
 
