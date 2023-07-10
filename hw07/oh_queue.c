@@ -32,10 +32,10 @@ int enqueue(const char *studentName, const enum subject topicName, const float q
     *name = 0;
     student_to_be_added.studentData.topic.topicName = topicName;
     student_to_be_added.studentData.topic.questionNumber = questionNumber;
-    student_to_be_added.queue_number = oh_queue.stats.no_of_people_in_queue;
+    student_to_be_added.queue_number = oh_queue.stats.no_of_people_visited + oh_queue.stats.no_of_people_in_queue;
     hash(student_to_be_added.customID, student_to_be_added.studentData.name, pub_key);
-    oh_queue.students[student_to_be_added.queue_number] = student_to_be_added;
-    oh_queue.stats.no_of_people_in_queue+=1;
+    oh_queue.students[oh_queue.stats.no_of_people_in_queue] = student_to_be_added;
+    oh_queue.stats.no_of_people_in_queue += 1;
     OfficeHoursStatus(&oh_queue.stats);
     return SUCCESS;
 }
@@ -77,7 +77,7 @@ int group_by_topic(struct Topic topic, struct Student *grouped[]) {
     short i = 0;
     short j = 0;
     while (i < oh_queue.stats.no_of_people_in_queue){
-        if (oh_queue.students[i].studentData.topic.topicName == topic.topicName){
+        if (oh_queue.students[i].studentData.topic.topicName == topic.topicName && oh_queue.students[i].studentData.topic.questionNumber == topic.questionNumber){
             grouped[j] = &oh_queue.students[i];
             j++;
         }
@@ -154,8 +154,8 @@ int remove_student_by_name(char *name){
  */
 int remove_student_by_topic(struct Topic topic) {
     //create a struct student array
-    //call group_by_topic and store the number of students in the array
-    //iterate through the array and call remove_student_by_name
+    //call group_by_topic and store the students pointers in the array
+    //iterate through the array and remove them customID
     struct Student *grouped[MAX_QUEUE_LENGTH];
     short students_removed = 0;
     short i = 0;

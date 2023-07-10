@@ -1,5 +1,4 @@
 Running suite(s): oh_queue_suite
  my_string_suite
-97%: Checks: 81, Failures: 2, Errors: 0
-suites/oh_queue_suite.c:580:F:test_group_by_topic_same_topic_different_number:test_group_by_topic_same_topic_different_number:0: Expected the number of students with topic {Assembly, 7} to be 4, was 8
+98%: Checks: 81, Failures: 1, Errors: 0
 suites/oh_queue_suite.c:1112:F:test_remove_student_by_topic_basic:test_remove_student_by_topic_basic:0: Expected topicName to be 3, was 0
