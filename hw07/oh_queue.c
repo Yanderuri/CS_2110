@@ -50,7 +50,8 @@ int dequeue(void) {
     }
     // 1 writes into 0, 2 writes into 1, 3 writes into 2...30 writes into 29, null writes into 30.
     short i = 0;
-    while (i < oh_queue.stats.no_of_people_in_queue-1){ // if there's 1 person in queue, this loop shouldn't run, and the element to be dequeue will be null.
+    // if there's 1 person in queue, this loop shouldn't run, and the element to be dequeue will be null.
+    while (i < oh_queue.stats.no_of_people_in_queue-1){ 
         oh_queue.students[i] = oh_queue.students[i+1];
         i++;
     }
@@ -77,8 +78,7 @@ int group_by_topic(struct Topic topic, struct Student *grouped[]) {
     short i = 0;
     short j = 0;
     while (i < oh_queue.stats.no_of_people_in_queue){
-        if (
-            (oh_queue.students[i].studentData.topic.topicName == topic.topicName || (enum subject) topic.topicName == (enum subject) oh_queue.students[i].studentData.topic.topicName) && oh_queue.students[i].studentData.topic.questionNumber == topic.questionNumber){
+        if ((oh_queue.students[i].studentData.topic.topicName == topic.topicName || (enum subject) topic.topicName == (enum subject) oh_queue.students[i].studentData.topic.topicName) && oh_queue.students[i].studentData.topic.questionNumber == topic.questionNumber){
             grouped[j] = &oh_queue.students[i];
             j++;
         }
@@ -172,7 +172,6 @@ int remove_student_by_topic(struct Topic topic) {
     }
     return SUCCESS;
 }
-
 /** OfficeHoursStatus
  * @brief Updates the "currentStatus" field based on
  * whether or not all students in the queue have been helped
@@ -180,13 +179,12 @@ int remove_student_by_topic(struct Topic topic) {
  * you are to update
  */
 void OfficeHoursStatus(struct OfficeHoursStats* resultStats){
-    if (oh_queue.stats.no_of_people_in_queue == 0 && my_strncmp(resultStats->currentStatus, "I", 1) == 0){
+    if (oh_queue.stats.no_of_people_in_queue <= 0 && my_strncmp(resultStats->currentStatus, "I", 1) == 0){
         resultStats->currentStatus = "Completed";
     }
     if (oh_queue.stats.no_of_people_in_queue > 0 && my_strncmp(resultStats->currentStatus, "C", 1) == 0){
         resultStats->currentStatus = "InProgress";
     }
-
 }
 
 /*
