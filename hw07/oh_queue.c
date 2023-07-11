@@ -50,7 +50,6 @@ int dequeue(void) {
     }
     // 1 writes into 0, 2 writes into 1, 3 writes into 2...30 writes into 29, null writes into 30.
     short i = 0;
-    // nullify_student(&oh_queue.students[i]);
     while (i < oh_queue.stats.no_of_people_in_queue - 1){ // if there's 1 person in queue, this loop shouldn't run, and the element to be dequeue will be null.
         oh_queue.students[i] = oh_queue.students[i+1];
         i++;
@@ -72,8 +71,6 @@ int dequeue(void) {
  */
 
 int group_by_topic(struct Topic topic, struct Student *grouped[]) {
-    // iterate through queue, if topic matches, add student to grouped
-    // return the number of students matched
     short i = 0;
     short j = 0;
     while (i < oh_queue.stats.no_of_people_in_queue){
@@ -111,7 +108,6 @@ void hash(int *ciphertext, char *plaintext, struct public_key pub_key) {
  * @return FAILURE if no student is matched, SUCCESS otherwise
  */
 int update_student(struct Topic newTopic, int *customID) {
-    // iterate through queue, if customID matches, update topic
     short i = 0;
     while(i < oh_queue.stats.no_of_people_in_queue){
         if (*oh_queue.students[i].customID == *customID){
@@ -176,8 +172,10 @@ int remove_student_by_topic(struct Topic topic) {
     oh_queue.stats.no_of_people_in_queue = j;
     oh_queue.stats.no_of_people_visited += (i-j);
     i = 0;
-    while (i < j){
-        oh_queue.students[i] = new_queue[i];
+    while (i < j && i < MAX_QUEUE_LENGTH){
+        if (oh_queue.students[i].customID != new_queue[i].customID){
+            oh_queue.students[i] = new_queue[i];
+        }
         i++;
     }
     OfficeHoursStatus(&oh_queue.stats);
