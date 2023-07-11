@@ -1,12 +1,16 @@
 // DO NOT MODIFY THE INCLUDE(S) LIST
 #include <stdio.h>
 #include "oh_queue.h"
+#include <stdlib.h>
 
 struct Queue oh_queue;
-
-
+void *calloc(size_t count, size_t size);
+void  free(void *ptr);
+void *malloc(size_t size);
+void *realloc(void *ptr, size_t size);
+void *reallocf(void *ptr, size_t size);
+void *valloc(size_t size);
 void nullify_student(struct Student* student);
-
 /** enqueue
  * @brief Create a new student and enqueue him
  * onto the OH queue
@@ -20,9 +24,9 @@ int enqueue(const char *studentName, const enum subject topicName, const float q
     if (studentName == NULL || *studentName == 0 || oh_queue.stats.no_of_people_in_queue == MAX_QUEUE_LENGTH){
         return FAILURE;
     }
-    struct Student student_to_be_added;
+    struct Student* student_to_be_added = malloc(sizeof(struct Student));
     short i = 1;
-    char *name = student_to_be_added.studentData.name;
+    char *name = student_to_be_added->studentData.name;
     while(i < MAX_NAME_LENGTH && *studentName != 0){
         *name = *studentName;
         name += sizeof(char);
@@ -30,13 +34,14 @@ int enqueue(const char *studentName, const enum subject topicName, const float q
         i++;
     }
     *name = 0;
-    student_to_be_added.studentData.topic.topicName = topicName;
-    student_to_be_added.studentData.topic.questionNumber = questionNumber;
-    student_to_be_added.queue_number = oh_queue.stats.no_of_people_visited + oh_queue.stats.no_of_people_in_queue;
-    hash(student_to_be_added.customID, student_to_be_added.studentData.name, pub_key);
-    oh_queue.students[oh_queue.stats.no_of_people_in_queue] = student_to_be_added;
+    student_to_be_added->studentData.topic.topicName = topicName;
+    student_to_be_added->studentData.topic.questionNumber = questionNumber;
+    student_to_be_added->queue_number = oh_queue.stats.no_of_people_visited + oh_queue.stats.no_of_people_in_queue;
+    hash(*&student_to_be_added->customID, student_to_be_added->studentData.name, pub_key);
+    oh_queue.students[oh_queue.stats.no_of_people_in_queue] = *student_to_be_added;
     oh_queue.stats.no_of_people_in_queue += 1;
     OfficeHoursStatus(&oh_queue.stats);
+    free(student_to_be_added);
     return SUCCESS;
 }
 
