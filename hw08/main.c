@@ -23,7 +23,7 @@ enum gba_state {
 int main(void) {
   /* TODO: */
   // Manipulate REG_DISPCNT here to set Mode 3. //
-
+  
   // Save current and previous state of button input.
   u32 previousButtons = BUTTONS;
   u32 currentButtons = BUTTONS;
@@ -61,6 +61,6 @@ int main(void) {
   }
 
   UNUSED(previousButtons); // You can remove this once previousButtons is used
-
+  waitForVBlank();
   return 0;
 }

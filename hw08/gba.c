@@ -4,12 +4,17 @@ volatile unsigned short *videoBuffer = (volatile unsigned short *) 0x6000000;
 u32 vBlankCounter = 0;
 
 /*
+Attributions:
+
+playing cards sprites: https://georgeblackwell.itch.io/playing-cards-sprite-pack?download
+
+*/
+/*
   Wait until the start of the next VBlank. This is useful to avoid tearing.
   Completing this function is required.
 */
 void waitForVBlank(void) {
-  // TODO: IMPLEMENT
-
+  // TODO: IMPLEMENTs
   // (1)
   // Write a while loop that loops until we're NOT in vBlank anymore:
   // (This prevents counting one VBlank more than once if your app is too fast)
@@ -19,6 +24,10 @@ void waitForVBlank(void) {
 
   // (3)
   // Finally, increment the vBlank counter:
+  while (SCANLINECOUNTER > 160) {
+  }
+  while (SCANLINECOUNTER < 160) {
+  }
 }
 
 static int __qran_seed = 42;
@@ -34,10 +43,7 @@ int randint(int min, int max) { return (qran() * (max - min) >> 15) + min; }
   Using DMA is NOT recommended. (In fact, using DMA with this function would be really slow!)
 */
 void setPixel(int row, int col, u16 color) {
-  // TODO: IMPLEMENT
-  UNUSED(row);
-  UNUSED(col);
-  UNUSED(color);
+  *(videoBuffer + OFFSET(row, col, SCREEN_WIDTH)) = color;
 }
 
 /*
@@ -47,11 +53,13 @@ void setPixel(int row, int col, u16 color) {
 */
 void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
   // TODO: IMPLEMENT
-  UNUSED(row);
-  UNUSED(col);
-  UNUSED(width);
-  UNUSED(height);
-  UNUSED(color);
+    volatile unsigned short lcolor;
+    lcolor = color;
+    for(int r=0; r<height; r++) {
+        DMA[3].src = &lcolor;
+        DMA[3].dst = &videoBuffer[OFFSET(row+r,col,SCREEN_WIDTH)];
+        DMA[3].cnt = width | DMA_ON | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT;
+    }
 }
 
 /*
@@ -61,7 +69,10 @@ void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
 */
 void drawFullScreenImageDMA(const u16 *image) {
   // TODO: IMPLEMENT
-  UNUSED(image);
+  volatile u16 *limage = image;
+  DMA[3].src = &limage;
+  DMA[3].dst = &videoBuffer[0];
+  DMA[3].cnt = WIDTH * HEIGHT | DMA_ON | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT;
 }
 
 /*
@@ -72,12 +83,12 @@ void drawFullScreenImageDMA(const u16 *image) {
   This function can be completed using `height` DMA calls. Solutions that use more DMA calls will not get credit.
 */
 void drawImageDMA(int row, int col, int width, int height, const u16 *image) {
-  // TODO: IMPLEMENT
-  UNUSED(row);
-  UNUSED(col);
-  UNUSED(width);
-  UNUSED(height);
-  UNUSED(image);
+      volatile u16 *limage = image;
+      for(int r=0; r<height; r++) {
+            DMA[3].src = &limage[OFFSET(r,0,width)];
+            DMA[3].dst = &videoBuffer[OFFSET(row+r,col,SCREEN_WIDTH)];
+            DMA[3].cnt = width | DMA_ON | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT;
+      }
 }
 
 /*
@@ -102,6 +113,7 @@ void undrawImageDMA(int row, int col, int width, int height, const u16 *image) {
 void fillScreenDMA(volatile u16 color) {
   // TODO: IMPLEMENT
   UNUSED(color);
+
 }
 
 /* STRING-DRAWING FUNCTIONS (provided) */
