@@ -43,7 +43,7 @@ int randint(int min, int max) { return (qran() * (max - min) >> 15) + min; }
   Using DMA is NOT recommended. (In fact, using DMA with this function would be really slow!)
 */
 void setPixel(int row, int col, u16 color) {
-  *(videoBuffer + OFFSET(row, col, SCREEN_WIDTH)) = color;
+  *(videoBuffer + OFFSET(row, col, WIDTH)) = color;
 }
 
 /*
@@ -57,7 +57,7 @@ void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
     lcolor = color;
     for(int r=0; r<height; r++) {
         DMA[3].src = &lcolor;
-        DMA[3].dst = &videoBuffer[OFFSET(row+r,col,SCREEN_WIDTH)];
+        DMA[3].dst = &videoBuffer[OFFSET(row+r,col, WIDTH)];
         DMA[3].cnt = width | DMA_ON | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT;
     }
 }
@@ -69,10 +69,10 @@ void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
 */
 void drawFullScreenImageDMA(const u16 *image) {
   // TODO: IMPLEMENT
-  volatile u16 *limage = image;
+  volatile u16 const *limage = image;
   DMA[3].src = &limage;
   DMA[3].dst = &videoBuffer[0];
-  DMA[3].cnt = WIDTH * HEIGHT | DMA_ON | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT;
+  DMA[3].cnt = WIDTH * HEIGHT | DMA_ON | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT;
 }
 
 /*
@@ -83,11 +83,11 @@ void drawFullScreenImageDMA(const u16 *image) {
   This function can be completed using `height` DMA calls. Solutions that use more DMA calls will not get credit.
 */
 void drawImageDMA(int row, int col, int width, int height, const u16 *image) {
-      volatile u16 *limage = image;
+      volatile u16 const *limage = image;
       for(int r=0; r<height; r++) {
             DMA[3].src = &limage[OFFSET(r,0,width)];
-            DMA[3].dst = &videoBuffer[OFFSET(row+r,col,SCREEN_WIDTH)];
-            DMA[3].cnt = width | DMA_ON | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT;
+            DMA[3].dst = &videoBuffer[OFFSET(row+r,col, width)];
+            DMA[3].cnt = width | DMA_ON | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT;
       }
 }
 
@@ -99,11 +99,12 @@ void drawImageDMA(int row, int col, int width, int height, const u16 *image) {
 */
 void undrawImageDMA(int row, int col, int width, int height, const u16 *image) {
   // TODO: IMPLEMENT
-  UNUSED(row);
-  UNUSED(col);
-  UNUSED(width);
-  UNUSED(height);
-  UNUSED(image);
+  volatile const u16 *limage = image;
+  for(int r=0; r<height; r++) {
+        DMA[3].src = &limage[OFFSET(r,0,width)];
+        DMA[3].dst = &videoBuffer[OFFSET(row+r,col, width)];
+        DMA[3].cnt = width | DMA_ON | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT;
+  }
 }
 
 /*
@@ -112,8 +113,9 @@ void undrawImageDMA(int row, int col, int width, int height, const u16 *image) {
 */
 void fillScreenDMA(volatile u16 color) {
   // TODO: IMPLEMENT
-  UNUSED(color);
-
+  DMA[3].src = &color;
+  DMA[3].dst = &videoBuffer[0];
+  DMA[3].cnt = WIDTH * HEIGHT | DMA_ON | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT;
 }
 
 /* STRING-DRAWING FUNCTIONS (provided) */
@@ -148,4 +150,11 @@ void drawCenteredString(int row, int col, int width, int height, char *str, u16 
   int new_row = row + ((height - strHeight) >> 1);
   int new_col = col + ((width - strWidth) >> 1);
   drawString(new_row, new_col, str, color);
+}
+
+void delay(int n) {
+        // delay for n tenths of a second
+        volatile int x = 0;
+        for (int i=0; i<n*8000; i++)
+          x++;
 }

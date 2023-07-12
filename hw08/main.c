@@ -29,38 +29,38 @@ int main(void) {
   u32 currentButtons = BUTTONS;
 
   // Load initial application state
-  enum gba_state state = START;
+  // enum gba_state state = START;
 
   while (1) {
     currentButtons = BUTTONS; // Load the current state of the buttons
+    drawRectDMA(0, 0, 240, 160, BLACK); // Clear the screen (black)
 
     /* TODO: */
     // Manipulate the state machine below as needed //
     // NOTE: Call waitForVBlank() before you draw
 
-    switch (state) {
-      case START:
+    // switch (state) {
+    //   case START:
 
-        // state = ?
-        break;
-      case PLAY:
+    //     // state = ?
+    //     break;
+    //   case PLAY:
 
-        // state = ?
-        break;
-      case WIN:
+    //     // state = ?
+    //     break;
+    //   case WIN:
 
-        // state = ?
-        break;
-      case LOSE:
+    //     // state = ?
+    //     break;
+    //   case LOSE:
 
-        // state = ?
-        break;
-    }
+    //     // state = ?
+    //     break;
+    // }
 
     previousButtons = currentButtons; // Store the current state of the buttons
+    waitForVBlank();
   }
-
   UNUSED(previousButtons); // You can remove this once previousButtons is used
-  waitForVBlank();
   return 0;
 }
