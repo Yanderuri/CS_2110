@@ -39,60 +39,71 @@ int main(void) {
   // Load initial application state
   // enum gba_state state = START;
   enum cards_state state = card_1;
-
   struct PLAY_CARD current_card = deck.cards[randint(0,52)];
+  char * score_string = calloc(5, sizeof(char));
   int score = 0;
-
+  score += current_card.value + 1;
+  int add_score = 0;
+  
+  waitForVBlank();
+  fillScreenDMA(BLACK);
   while (1) {
     currentButtons = BUTTONS; // Load the current state of the buttons
-
-
-    waitForVBlank();
-    drawChar(100, WIDTH/2, 48 + state, WHITE);
-    
+    itoa(score, score_string, 10);
+    drawCenteredString(120, WIDTH/2, 10, 10, score_string, WHITE);
     switch(state){
       case card_1:
         waitForVBlank();
-        fillScreenDMA(BLACK);
-        waitForVBlank();
         drawImageDMA(0,0, CARD_WIDTH, CARD_HEIGHT, current_card.image);
-        if (KEY_JUST_PRESSED(BUTTON_RIGHT, currentButtons, previousButtons)){
+        if (KEY_DOWN(BUTTON_RIGHT, currentButtons)){
           current_card = deck.cards[randint(0,52)];
+          add_score = 1;
           state = card_2;
         }
         break;
       case card_2:
         waitForVBlank();
         drawImageDMA(0,30, CARD_WIDTH, CARD_HEIGHT, current_card.image);
-        if (KEY_JUST_PRESSED(BUTTON_RIGHT, currentButtons, previousButtons)){
+        if (KEY_DOWN(BUTTON_RIGHT, currentButtons)){
           current_card = deck.cards[randint(0,52)];
+          add_score = 1;
           state = card_3;
         }
         break;
       case card_3:
         waitForVBlank();
         drawImageDMA(0,60, CARD_WIDTH, CARD_HEIGHT, current_card.image);
-        if (KEY_JUST_PRESSED(BUTTON_RIGHT, currentButtons, previousButtons)){
+        if (KEY_DOWN(BUTTON_RIGHT, currentButtons)){
           current_card = deck.cards[randint(0,52)];
+          add_score = 1;
           state = card_4;
         }
         break;
       case card_4:
         waitForVBlank();
         drawImageDMA(0,90, CARD_WIDTH, CARD_HEIGHT, current_card.image);
+        delay(50);
+        if (KEY_DOWN(BUTTON_RIGHT, currentButtons)){
+          current_card = deck.cards[randint(0,52)];
+          add_score = 1;
+          state = card_1;
+          waitForVBlank();
+          fillScreenDMA(BLACK);
+        }
         break;
     }
+    UNUSED(previousButtons);
     // score += current_card.value + 1; // because the values are 0-12, but we want 1-13
+    if (add_score){
+      score += current_card.value + 1;
+      add_score = 0;
+    }
+    delay(25);
     waitForVBlank();
-    char * score_string = malloc(sizeof(char) * 3);
-    itoa(score, score_string, 10);
-    drawCenteredString(120, WIDTH/2, 10, 10, score_string, WHITE);
-
-    free(score_string);
-    delay(100);
+    drawRectDMA(120, WIDTH/2, 30, 10, BLACK);
     previousButtons = currentButtons; // Store the current state of the buttons
   }
-  UNUSED(previousButtons); // You can remove this once previousButtons is used
+  free(score_string);
   return 0;
 }
 // Add all of the cards to the deck

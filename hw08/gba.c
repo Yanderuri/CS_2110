@@ -34,9 +34,7 @@ static int qran(void) {
   __qran_seed = 1664525 * __qran_seed + 1013904223;
   return (__qran_seed >> 16) & 0x7FFF;
 }
-
 int randint(int min, int max) { return (qran() * (max - min) >> 15) + min; }
-
 /*
   Sets a pixel in the video buffer to a given color.
   Using DMA is NOT recommended. (In fact, using DMA with this function would be really slow!)
