@@ -24,10 +24,9 @@ void waitForVBlank(void) {
 
   // (3)
   // Finally, increment the vBlank counter:
-  while (SCANLINECOUNTER > 160) {
-  }
-  while (SCANLINECOUNTER < 160) {
-  }
+  while (SCANLINECOUNTER > 160);
+  while (SCANLINECOUNTER < 160);
+  vBlankCounter++;
 }
 
 static int __qran_seed = 42;
@@ -51,12 +50,12 @@ void setPixel(int row, int col, u16 color) {
   The width and height, as well as the top left corner of the rectangle, are passed as parameters.
   This function can be completed using `height` DMA calls. 
 */
+// Works flawlessly
 void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
   // TODO: IMPLEMENT
-    volatile unsigned short lcolor;
-    lcolor = color;
+    volatile unsigned short *lcolor = &color;
     for(int r=0; r<height; r++) {
-        DMA[3].src = &lcolor;
+        DMA[3].src = lcolor;
         DMA[3].dst = &videoBuffer[OFFSET(row+r,col, WIDTH)];
         DMA[3].cnt = width | DMA_ON | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT;
     }
@@ -69,9 +68,8 @@ void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
 */
 void drawFullScreenImageDMA(const u16 *image) {
   // TODO: IMPLEMENT
-  volatile u16 const *limage = image;
-  DMA[3].src = &limage;
-  DMA[3].dst = &videoBuffer[0];
+  DMA[3].src = &image[OFFSET(0,0, WIDTH)];
+  DMA[3].dst = &videoBuffer[OFFSET(0,0, WIDTH)];
   DMA[3].cnt = WIDTH * HEIGHT | DMA_ON | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT;
 }
 
@@ -82,11 +80,11 @@ void drawFullScreenImageDMA(const u16 *image) {
   Completing this function is required.
   This function can be completed using `height` DMA calls. Solutions that use more DMA calls will not get credit.
 */
+// Works now
 void drawImageDMA(int row, int col, int width, int height, const u16 *image) {
-      volatile u16 const *limage = image;
       for(int r=0; r<height; r++) {
-            DMA[3].src = &limage[OFFSET(r,0,width)];
-            DMA[3].dst = &videoBuffer[OFFSET(row+r,col, width)];
+            DMA[3].src = &image[OFFSET(r,0, width)];
+            DMA[3].dst = &videoBuffer[OFFSET(row+r,col, WIDTH)];
             DMA[3].cnt = width | DMA_ON | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT;
       }
 }
@@ -98,10 +96,9 @@ void drawImageDMA(int row, int col, int width, int height, const u16 *image) {
   This function can be completed using `height` DMA calls.
 */
 void undrawImageDMA(int row, int col, int width, int height, const u16 *image) {
-  // TODO: IMPLEMENT
   volatile const u16 *limage = image;
   for(int r=0; r<height; r++) {
-        DMA[3].src = &limage[OFFSET(r,0,width)];
+        DMA[3].src = &limage[OFFSET(r,0, width)];
         DMA[3].dst = &videoBuffer[OFFSET(row+r,col, width)];
         DMA[3].cnt = width | DMA_ON | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT;
   }
@@ -153,8 +150,8 @@ void drawCenteredString(int row, int col, int width, int height, char *str, u16 
 }
 
 void delay(int n) {
-        // delay for n tenths of a second
-        volatile int x = 0;
-        for (int i=0; i<n*8000; i++)
-          x++;
+    // delay for n tenths of a second
+    volatile int x = 0;
+    for (int i=0; i<n*8000; i++)
+      x++;
 }

@@ -1,7 +1,14 @@
 {
     "files.associations": {
         "my_string.h": "c",
-        "lib.h": "c"
+        "lib.h": "c",
+        "cards_white.h": "c",
+        "gba.h": "c",
+        "garbage.h": "c",
+        "stdlib.h": "c",
+        "cards_white.c": "cpp",
+        "main.h": "c",
+        "stdio.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

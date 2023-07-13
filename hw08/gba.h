@@ -16,7 +16,7 @@ typedef unsigned char u8;
 // ---------------------------------------------------------------------------
 //                       MODE3 MACROS
 // ---------------------------------------------------------------------------
-#define OFFSET(row, col, width) ((col)+(width)*(row))
+#define OFFSET(row, col, width) ((row)*(width) + (col))
 
 #define REG_DISPCNT (*(volatile unsigned short *) 0x4000000)
 #define MODE3 3
