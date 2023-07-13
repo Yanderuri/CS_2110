@@ -8,7 +8,9 @@
         "stdlib.h": "c",
         "cards_white.c": "cpp",
         "main.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "cards.h": "c",
+        "support.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

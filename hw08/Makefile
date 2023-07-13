@@ -1,20 +1,20 @@
 ################################################################################
 # These are variables for the GBA toolchain build
 # You can add others if you wish to
-# ***** YOUR NAME HERE *****
+# ***** Vy Mai *****
 ################################################################################
 
 # TA-TODO: Put your application name here.
 # This should be a just a name i.e MyFirstGBAProgram
 # No SPACES AFTER THE NAME.
-PROGNAME = App
+PROGNAME = Blackjack_Simplfieid
 
 # TA-TODO: Add the C files you want compiled here (replace extension with .o)
 # Here you must put a list of all of the object files
 # that will be compiled into your program. For example
 # if you have main.c and myLib.c then in the following
 # line you would put main.o and myLib.o
-OFILES = gba.o font.o main.o images/garbage.o images/cards_c/cards_white.o
+OFILES = gba.o font.o images/cards_c/cards_white.o cards.o main.o 
 
 ################################################################################
 # These are various settings used to make the GBA toolchain work
