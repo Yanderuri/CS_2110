@@ -4,7 +4,7 @@
 #include "gba.h"
 #include "images/garbage.h"
 #include "images/cards_c/cards_white.h"
-
+#include "support.h"
 
 // TODO: Create any necessary structs
 /*
@@ -27,7 +27,6 @@
 */
 #define CARD_HEIGHT 84
 #define CARD_WIDTH 60
-
 
 enum cards_values {
     ACE = 0,

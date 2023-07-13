@@ -40,52 +40,56 @@ int main(void) {
   // enum gba_state state = START;
   enum cards_state state = card_1;
 
+  struct PLAY_CARD current_card = deck.cards[randint(0,52)];
+  int score = 0;
+
   while (1) {
     currentButtons = BUTTONS; // Load the current state of the buttons
+
+
     waitForVBlank();
-    fillScreenDMA(BLACK);
+    drawChar(100, WIDTH/2, 48 + state, WHITE);
+    
     switch(state){
       case card_1:
         waitForVBlank();
-        drawImageDMA(0,0, CARD_WIDTH, CARD_HEIGHT, deck.cards[randint(0,52)].image);
+        fillScreenDMA(BLACK);
+        waitForVBlank();
+        drawImageDMA(0,0, CARD_WIDTH, CARD_HEIGHT, current_card.image);
+        if (KEY_JUST_PRESSED(BUTTON_RIGHT, currentButtons, previousButtons)){
+          current_card = deck.cards[randint(0,52)];
+          state = card_2;
+        }
         break;
       case card_2:
         waitForVBlank();
-        drawImageDMA(0,30, CARD_WIDTH, CARD_HEIGHT, deck.cards[randint(0,52)].image);
+        drawImageDMA(0,30, CARD_WIDTH, CARD_HEIGHT, current_card.image);
+        if (KEY_JUST_PRESSED(BUTTON_RIGHT, currentButtons, previousButtons)){
+          current_card = deck.cards[randint(0,52)];
+          state = card_3;
+        }
         break;
       case card_3:
         waitForVBlank();
-        drawImageDMA(0,60, CARD_WIDTH, CARD_HEIGHT, deck.cards[randint(0,52)].image);
+        drawImageDMA(0,60, CARD_WIDTH, CARD_HEIGHT, current_card.image);
+        if (KEY_JUST_PRESSED(BUTTON_RIGHT, currentButtons, previousButtons)){
+          current_card = deck.cards[randint(0,52)];
+          state = card_4;
+        }
         break;
       case card_4:
         waitForVBlank();
-        drawImageDMA(0,90, CARD_WIDTH, CARD_HEIGHT, deck.cards[randint(0,52)].image);
+        drawImageDMA(0,90, CARD_WIDTH, CARD_HEIGHT, current_card.image);
         break;
     }
-    state = randint(0,4);
-    /* TODO: */
-    // Manipulate the state machine below as needed //
-    // NOTE: Call waitForVBlank() before you draw
+    // score += current_card.value + 1; // because the values are 0-12, but we want 1-13
+    waitForVBlank();
+    char * score_string = malloc(sizeof(char) * 3);
+    itoa(score, score_string, 10);
+    drawCenteredString(120, WIDTH/2, 10, 10, score_string, WHITE);
 
-    // switch (state) {
-    //   case START:
-
-    //     // state = ?
-    //     break;
-    //   case PLAY:
-
-    //     // state = ?
-    //     break;
-    //   case WIN:
-
-    //     // state = ?
-    //     break;
-    //   case LOSE:
-
-    //     // state = ?
-    //     break;
-    // }
-    delay(50);
+    free(score_string);
+    delay(100);
     previousButtons = currentButtons; // Store the current state of the buttons
   }
   UNUSED(previousButtons); // You can remove this once previousButtons is used
