@@ -33,6 +33,7 @@ typedef unsigned char u8;
 #define BLACK COLOR(0, 0, 0)
 #define GRAY COLOR(5, 5, 5)
 
+
 // The size of the GBA Screen
 #define WIDTH 240
 #define HEIGHT 160
@@ -53,6 +54,8 @@ extern volatile unsigned short *videoBuffer;
 #define BUTTON_DOWN     (1<<7)
 #define BUTTON_R        (1<<8)
 #define BUTTON_L        (1<<9)
+
+#define NBUTTONS (10)
 
 #define BUTTONS (*(volatile u32 *) 0x4000130)
 #define KEY_DOWN(key, buttons) (~(buttons) & (key))
