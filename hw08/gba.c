@@ -48,11 +48,16 @@ void setPixel(int row, int col, u16 color) {
   The width and height, as well as the top left corner of the rectangle, are passed as parameters.
   This function can be completed using `height` DMA calls. 
 */
-// Works flawlessly
 void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
-  // TODO: IMPLEMENT
-    volatile unsigned short *lcolor = &color;
+    // TODO: Prevent writing into out of bounds area.
+    volatile u16 *lcolor = &color;
     for(int r=0; r<height; r++) {
+        if (row + r >= HEIGHT) {
+            break;
+        }
+        if (row + r < 0 || col + width < 0) {
+            continue;
+        }
         DMA[3].src = lcolor;
         DMA[3].dst = &videoBuffer[OFFSET(row+r,col, WIDTH)];
         DMA[3].cnt = width | DMA_ON | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT;
@@ -81,9 +86,15 @@ void drawFullScreenImageDMA(const u16 *image) {
 // Works now
 void drawImageDMA(int row, int col, int width, int height, const u16 *image) {
       for(int r=0; r<height; r++) {
-            DMA[3].src = &image[OFFSET(r,0, width)];
-            DMA[3].dst = &videoBuffer[OFFSET(row+r,col, WIDTH)];
-            DMA[3].cnt = width | DMA_ON | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT;
+        if (row + r >= HEIGHT) {
+            break;
+        }
+        if (row + r < 0 || col + width < 0) {
+            continue;
+        }
+        DMA[3].src = &image[OFFSET(r,0, width)];
+        DMA[3].dst = &videoBuffer[OFFSET(row+r,col, WIDTH)];
+        DMA[3].cnt = width | DMA_ON | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT;
       }
 }
 

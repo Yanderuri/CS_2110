@@ -26,6 +26,7 @@ typedef unsigned char u8;
 #define WHITE COLOR(31, 31, 31)
 #define RED COLOR(31, 0, 0)
 #define GREEN COLOR(0, 31, 0)
+#define DARK_GREEN COLOR(0, 15, 0)
 #define BLUE COLOR(0, 0, 31)
 #define MAGENTA COLOR(31, 0, 31)
 #define CYAN COLOR(0, 31, 31)
