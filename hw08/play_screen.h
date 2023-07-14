@@ -7,5 +7,6 @@
 #include <stdlib.h>
 
 void draw_play_screen(struct HAND * hand, int score);
+void draw_dealer_hand(struct HAND * hand, int score);
 
 #endif

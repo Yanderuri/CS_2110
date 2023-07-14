@@ -53,5 +53,5 @@ int deal(struct DECK * deck, struct HAND * hand, int num_cards);
 void init_hand(struct HAND * hand);
 int count_score(struct HAND * hand);
 void sort_hand(struct HAND * hand);
-void draw_hand(struct HAND * hand, int row, int col);
+void draw_hand(struct HAND * hand, int row, int col, int direction);
 #endif

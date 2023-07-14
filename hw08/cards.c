@@ -137,7 +137,7 @@ void shuffle(struct DECK * deck){
 */
 int deal(struct DECK * deck, struct HAND * hand, int num_cards){
     if (hand->count == hand->max_size || deck->remaining <= num_cards){
-        return 0;
+        return 1;
     }
     int i;
     for (i = 0; i < num_cards; i++){
@@ -145,12 +145,17 @@ int deal(struct DECK * deck, struct HAND * hand, int num_cards){
         hand->count++;
         deck->remaining--;
     }
-    return 1;
+    return 0;
 }
 // Hand-related functions
 void init_hand(struct HAND * hand){
     hand->count = 0;
     hand->max_size = 5;
+    for (int i = 0; i < hand->max_size; i++){
+        hand->cards[i].image = NULL;
+        hand->cards[i].suit = 0;
+        hand->cards[i].value = 0;
+    }
 }
 int count_score(struct HAND * hand){
     int score = 0;
@@ -192,10 +197,18 @@ void sort_hand(struct HAND * hand){
     }
     free(temp);
 }
-void draw_hand(struct HAND * hand, int row, int col){
+void draw_hand(struct HAND * hand, int row, int col, int direction){
     int i;
-    for (i = 0; i < hand->count; i++){
-        waitForVBlank();
-        drawImageDMA(row, col + i * (CARD_WIDTH/2) , CARD_WIDTH, CARD_HEIGHT, hand->cards[i].image);
+    if (direction == 0){
+        for (i = 0; i < hand->count; i++){
+            waitForVBlank();
+            drawImageDMA(row, col + i * (CARD_WIDTH/2) , CARD_WIDTH, CARD_HEIGHT, hand->cards[i].image);
+        }
+    }
+    else if (direction == 1){
+        for (i = hand->count; i >= 0; i--){
+            waitForVBlank();
+            drawImageDMA(row, i * (CARD_WIDTH/2) + col, CARD_WIDTH, CARD_HEIGHT, hand->cards[i].image);
+        }
     }
 }

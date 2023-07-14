@@ -42,6 +42,13 @@ int main(void) {
     return 1;
   }
   init_hand(hand);
+
+// Dealer hand
+  struct HAND *dealer_hand;
+  if ((dealer_hand = malloc(sizeof(struct HAND))) == NULL) {
+    return 1;
+  }
+  init_hand(dealer_hand);
   // Shuffle the deck
   shuffle(deck);
   // Initialize the state
@@ -57,8 +64,7 @@ int main(void) {
       case START:
         if (KEY_JUST_PRESSED(BUTTON_A, currentButtons, previousButtons)) {
           state = PLAY;
-          deal(deck, hand, 1);
-          fillScreenDMA(BLACK);
+          fillScreenDMA(DARK_GREEN);
           waitForVBlank();
           draw_play_screen(hand, count_score(hand));
         }
@@ -67,21 +73,26 @@ int main(void) {
         waitForVBlank();
         if (KEY_JUST_PRESSED(BUTTON_A, currentButtons, previousButtons)) {
           // Redraw cards?
-          if (deal(deck, hand, 1)){
-            fillScreenDMA(BLACK);
+          if (deal(deck, hand, 1) == 0 && deal (deck, dealer_hand, 1) == 0){
             waitForVBlank();
+            draw_dealer_hand(dealer_hand, count_score(dealer_hand));
             draw_play_screen(hand, count_score(hand));
           }
         }
         if (KEY_JUST_PRESSED(BUTTON_B, currentButtons, previousButtons)) {
           state = LOSE;
+          init_hand(hand);
+          init_deck(deck);
+          init_hand(dealer_hand);
         }
         break;
       case WIN:
         if (KEY_JUST_PRESSED(BUTTON_A, currentButtons, previousButtons)) {
           state = START;
-          init_hand (hand);
+          init_hand(hand);
           init_deck(deck);
+          shuffle(deck);
+          init_hand(dealer_hand);
           draw_start_screen();
         }
         break;
@@ -90,6 +101,8 @@ int main(void) {
           state = START;
           init_hand(hand);
           init_deck(deck);
+          shuffle(deck);
+          init_hand(dealer_hand);
           draw_start_screen();
         }
         break;
@@ -99,6 +112,7 @@ int main(void) {
   // Letting pointers go
   free(&deck);
   free(&hand);
+  free(&dealer_hand);
   return 0;
 }
 void waitForInput(u32 currentButtons, u32 previousButtons, u16 button){

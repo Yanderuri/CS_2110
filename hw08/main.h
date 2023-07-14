@@ -8,6 +8,6 @@
 #include "play_screen.h"
 
 void waitForInput(u32 currentButtons, u32 previousButtons, u16 button);
-
 int state_decider(int state, struct DECK * deck, struct HAND * hand);
+
 #endif
