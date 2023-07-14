@@ -55,6 +55,8 @@ int main(void) {
   enum gba_state state = START;
   UNUSED(hand);
 
+  score = 0;
+
   draw_start_screen();
   // Game loop
   while(1) {
@@ -71,22 +73,15 @@ int main(void) {
         break;
       case PLAY:
         waitForVBlank();
+        // Keep letting the players draw card, until they bust or fold
         if (KEY_JUST_PRESSED(BUTTON_A, currentButtons, previousButtons)) {
-          // Redraw cards?
-          if (deal(deck, hand, 1) == 0 && deal (deck, dealer_hand, 1) == 0){
-            waitForVBlank();
-            draw_dealer_hand(dealer_hand, count_score(dealer_hand));
-            draw_play_screen(hand, count_score(hand));
-          }
         }
+        // Engage the dealer algorithm in determing whether to draw or not
         if (KEY_JUST_PRESSED(BUTTON_B, currentButtons, previousButtons)) {
-          state = LOSE;
-          init_hand(hand);
-          init_deck(deck);
-          init_hand(dealer_hand);
         }
         break;
       case WIN:
+        score += 1;
         if (KEY_JUST_PRESSED(BUTTON_A, currentButtons, previousButtons)) {
           state = START;
           init_hand(hand);

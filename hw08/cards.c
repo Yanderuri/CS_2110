@@ -55,7 +55,7 @@ struct PLAY_CARD queen_spades = {queen_spades_white, SPADES, QUEEN};
 struct PLAY_CARD king_spades = {king_spades_white, SPADES, KING};
 
 void init_deck(struct DECK * deck){
-    deck->max_size = 52;
+    deck->size = 52;
     deck->remaining = 52;
 
     deck->cards[0] = ace_clubs;
@@ -206,7 +206,7 @@ void draw_hand(struct HAND * hand, int row, int col, int direction){
         }
     }
     else if (direction == 1){
-        for (i = hand->count; i >= 0; i--){
+        for (i = hand->count - 1; i >= 0; i--){
             waitForVBlank();
             drawImageDMA(row, i * (CARD_WIDTH/2) + col, CARD_WIDTH, CARD_HEIGHT, hand->cards[i].image);
         }
