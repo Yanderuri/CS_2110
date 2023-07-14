@@ -35,7 +35,7 @@ struct PLAY_CARD{
 struct DECK{
     struct PLAY_CARD cards[52];
     int size;
-    int remaining;
+    int remaining;  
 };
 struct HAND{
     struct PLAY_CARD cards[5];
