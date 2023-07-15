@@ -3,49 +3,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-enum gba_state {
+enum gba_state
+{
   START, // splash screen
-  PLAY, // play the game
-  WIN, // win screen
-  LOSE, // lose screen
-};
-
-enum cards_state{
-  card_1 = 0,
-  card_2 = 1,
-  card_3 = 2,
-  card_4 = 3
+  PLAY,  // play the game
+  WIN,   // win screen
+  LOSE,  // lose screen
 };
 
 // for intents and purposes, main() is simultaneously an init() function and a rendering function
-int main(void) {
+int main(void)
+{
   /* TODO: */
   // Manipulate REG_DISPCNT here to set Mode 3. //
   REG_DISPCNT = MODE3 | BG2_ENABLE;
 
   u32 currentButtons = BUTTONS;
-  UNUSED(currentButtons);
   u32 previousButtons = BUTTONS;
-  UNUSED(previousButtons);
-
-
   // Initialize the deck
   struct DECK *deck;
-  if ((deck = malloc(sizeof(struct DECK))) == NULL) {
+  if ((deck = malloc(sizeof(struct DECK))) == NULL)
+  {
     return 1;
   }
   init_deck(deck);
   // Initialize the hand
   struct HAND *hand;
-  if ((hand = malloc(sizeof(struct HAND))) == NULL) {
+  if ((hand = malloc(sizeof(struct HAND))) == NULL)
+  {
     return 1;
   }
   init_hand(hand);
 
-// Dealer hand
+  // Dealer hand
   struct HAND *dealer_hand;
-  if ((dealer_hand = malloc(sizeof(struct HAND))) == NULL) {
+  if ((dealer_hand = malloc(sizeof(struct HAND))) == NULL)
+  {
     return 1;
   }
   init_hand(dealer_hand);
@@ -53,54 +46,101 @@ int main(void) {
   shuffle(deck);
   // Initialize the state
   enum gba_state state = START;
-  UNUSED(hand);
-
-  score = 0;
-
+  // Draw the start screen
   draw_start_screen();
+  // Initialize the score
+  int score = 0;
   // Game loop
-  while(1) {
+  while (1)
+  {
     currentButtons = BUTTONS;
     // State transitions
-    switch(state) {
-      case START:
-        if (KEY_JUST_PRESSED(BUTTON_A, currentButtons, previousButtons)) {
-          state = PLAY;
-          fillScreenDMA(DARK_GREEN);
+    switch (state)
+    {
+    case START:
+      if (KEY_JUST_PRESSED(BUTTON_START, currentButtons, previousButtons))
+      {
+        state = PLAY;
+        init_play_screen(deck, hand, dealer_hand);
+      }
+      break;
+    case PLAY:
+      waitForVBlank();
+      // Keep letting the players draw card, until they bust or fold
+      if (KEY_JUST_PRESSED(BUTTON_A, currentButtons, previousButtons))
+      {
+        deal(deck, hand, 1);
+        draw_player_hand(hand, count_score(hand));
+        if (count_score(hand) > 21)
+        {
+          state = LOSE;
           waitForVBlank();
-          draw_play_screen(hand, count_score(hand));
+          draw_lose_screen(score);
         }
-        break;
-      case PLAY:
-        waitForVBlank();
-        // Keep letting the players draw card, until they bust or fold
-        if (KEY_JUST_PRESSED(BUTTON_A, currentButtons, previousButtons)) {
+      }
+      // Engage the dealer in determing whether to draw or not
+      if (KEY_JUST_PRESSED(BUTTON_B, currentButtons, previousButtons))
+      {
+        while (count_score(dealer_hand) < 17)
+        {
+          deal(deck, dealer_hand, 1);
+          waitForVBlank();
+          draw_dealer_hand(dealer_hand, count_score(dealer_hand), 0);
+          delay(10);
         }
-        // Engage the dealer algorithm in determing whether to draw or not
-        if (KEY_JUST_PRESSED(BUTTON_B, currentButtons, previousButtons)) {
+        draw_dealer_hand(dealer_hand, count_score(dealer_hand), 1);
+        delay(100);
+
+        if (count_score(dealer_hand) > 21)
+        {
+          state = WIN;
+          score += 1;
+          draw_win_screen(score);
         }
-        break;
-      case WIN:
-        score += 1;
-        if (KEY_JUST_PRESSED(BUTTON_A, currentButtons, previousButtons)) {
-          state = START;
-          init_hand(hand);
-          init_deck(deck);
-          shuffle(deck);
-          init_hand(dealer_hand);
-          draw_start_screen();
+        else if (count_score(dealer_hand) > count_score(hand))
+        {
+          state = LOSE;
+          waitForVBlank();
+          draw_lose_screen(score);
         }
-        break;
-      case LOSE:
-        if (KEY_JUST_PRESSED(BUTTON_A, currentButtons, previousButtons)) {
-          state = START;
-          init_hand(hand);
-          init_deck(deck);
-          shuffle(deck);
-          init_hand(dealer_hand);
-          draw_start_screen();
+        else if (count_score(dealer_hand) < count_score(hand))
+        {
+          state = WIN;
+          score += 1;
+          draw_win_screen(score);
         }
-        break;
+        else
+        {
+          state = LOSE;
+          waitForVBlank();
+          draw_lose_screen(score);
+        }
+      }
+      break;
+    case WIN:
+      // TODO: Create win_screen.h and win_screen.c
+      if (KEY_JUST_PRESSED(BUTTON_START, currentButtons, previousButtons))
+      {
+        state = START;
+        init_hand(hand);
+        init_deck(deck);
+        shuffle(deck);
+        init_hand(dealer_hand);
+        draw_start_screen();
+      }
+      break;
+    case LOSE:
+      // TODO: Create lose_screen.h and lose_screen.c
+      break;
+    }
+    if (KEY_JUST_PRESSED(BUTTON_SELECT, currentButtons, previousButtons) && state != START)
+    {
+      state = START;
+      init_hand(hand);
+      init_deck(deck);
+      shuffle(deck);
+      init_hand(dealer_hand);
+      draw_start_screen();
     }
     previousButtons = currentButtons;
   }
@@ -108,17 +148,5 @@ int main(void) {
   free(&deck);
   free(&hand);
   free(&dealer_hand);
-  return 0;
-}
-void waitForInput(u32 currentButtons, u32 previousButtons, u16 button){
-  while (KEY_JUST_PRESSED(button, currentButtons, previousButtons) == 0){
-    currentButtons = BUTTONS;
-  }
-  return;
-}
-int state_decider(int state, struct DECK * deck, struct HAND * hand){
-  UNUSED(state);
-  UNUSED(deck);
-  UNUSED(hand);
   return 0;
 }

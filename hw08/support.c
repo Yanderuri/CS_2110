@@ -32,5 +32,18 @@ int itoa(int value, char *sp, int radix)
     }
     while (tp > tmp)
         *sp++ = *--tp;
+    *sp = 0;
     return len;
+}
+
+void score_string_maker(char * results, int score){
+	char * itoa_score_string;
+	if ((itoa_score_string = malloc(3)) == NULL)
+	{
+		return;
+	}
+	itoa(score, itoa_score_string, 10);
+	strncpy(results, "Score: ", 8);
+    strncat(results, itoa_score_string, 3);
+    free(itoa_score_string);
 }
