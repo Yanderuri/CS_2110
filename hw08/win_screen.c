@@ -15,7 +15,7 @@ void draw_win_screen(int score)
 		return;
 	}
 	score_string_maker(score_string, score);
-
+	drawString(50, 10, score_string, YELLOW);
 	free(score_string);
 	return;
 }

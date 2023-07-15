@@ -74,6 +74,7 @@ int main(void)
         if (count_score(hand) > 21)
         {
           state = LOSE;
+          delay(100);
           waitForVBlank();
           draw_lose_screen(score);
         }
@@ -90,7 +91,6 @@ int main(void)
         }
         draw_dealer_hand(dealer_hand, count_score(dealer_hand), 1);
         delay(100);
-
         if (count_score(dealer_hand) > 21)
         {
           state = WIN;
@@ -130,11 +130,20 @@ int main(void)
       }
       break;
     case LOSE:
-      // TODO: Create lose_screen.h and lose_screen.c
+      if (KEY_JUST_PRESSED(BUTTON_START, currentButtons, previousButtons))
+      {
+        state = START;
+        init_hand(hand);
+        init_deck(deck);
+        init_hand(dealer_hand);
+        shuffle(deck);
+        draw_start_screen();
+      }
       break;
     }
     if (KEY_JUST_PRESSED(BUTTON_SELECT, currentButtons, previousButtons) && state != START)
     {
+      score = 0;
       state = START;
       init_hand(hand);
       init_deck(deck);

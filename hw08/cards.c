@@ -205,6 +205,7 @@ void draw_hand(struct HAND * hand, int row, int col, int direction){
             drawImageDMA(row, col + i * (CARD_WIDTH/2) , CARD_WIDTH, CARD_HEIGHT, hand->cards[i].image);
         }
     }
+    // tbh, unused direction.
     else if (direction == 1){
         for (i = hand->count - 1; i >= 0; i--){
             waitForVBlank();

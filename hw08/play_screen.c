@@ -24,7 +24,6 @@ void draw_player_hand(struct HAND *hand, int score)
     waitForVBlank();
     // drawString(HEIGHT / 2 + 10, WIDTH * 3 / 4, score_string, WHITE);
 
-
     // Undraw the previous score location
     waitForVBlank();
     drawRectDMA(SCORE_DRAW_HEIGHT, (WIDTH * 3 / 4) - (hand->count - 1) * (CARD_WIDTH / 2), 20, 10, DARK_GREEN);
@@ -44,15 +43,16 @@ void draw_dealer_hand(struct HAND *hand, int score, int revealed)
         waitForVBlank();
         for (int i = 0; i < hand->count; i++)
         {
+            waitForVBlank();
             if (i == 0)
             {
-                // drawImageDMA(DEALER_HAND_ROW, DEALER_HAND_COL + (hand->count - 1 - i) * (CARD_WIDTH / 2), CARD_WIDTH, CARD_HEIGHT, hand->cards[i].image);
-                drawImageDMA(DEALER_HAND_ROW, DEALER_HAND_COL, CARD_WIDTH, CARD_HEIGHT, hand->cards[i].image);
-
+                drawImageDMA(DEALER_HAND_ROW, 
+                (WIDTH * 3 / 4) - (i+1) * (CARD_WIDTH / 2), 
+                CARD_WIDTH, CARD_HEIGHT, hand->cards[0].image);
             }
             else
             {
-                drawImageDMA(DEALER_HAND_ROW, DEALER_HAND_COL, CARD_WIDTH, CARD_HEIGHT, back_red_basic_white);
+                drawImageDMA(DEALER_HAND_ROW, (WIDTH * 3 / 4) - (i+1) * (CARD_WIDTH / 2), CARD_WIDTH, CARD_HEIGHT, back_red_basic_white);
             }
         }
     }
@@ -62,7 +62,8 @@ void draw_dealer_hand(struct HAND *hand, int score, int revealed)
         waitForVBlank();
         for (int i = 0; i < hand->count; i++)
         {
-            drawImageDMA(DEALER_HAND_ROW, DEALER_HAND_COL, CARD_WIDTH, CARD_HEIGHT, hand->cards[i].image);
+            waitForVBlank();
+            drawImageDMA(DEALER_HAND_ROW, (WIDTH * 3 / 4) - (i+1) * (CARD_WIDTH / 2), CARD_WIDTH, CARD_HEIGHT, hand->cards[i].image);
         }
         // Draw score
         char *score_string;
@@ -71,7 +72,7 @@ void draw_dealer_hand(struct HAND *hand, int score, int revealed)
             return;
         }
         itoa(score, score_string, 10);
-        drawString(CARD_HEIGHT / 2, WIDTH * 3 / 4 + CARD_WIDTH / 2, score_string, WHITE);
+        drawCenteredString(CARD_HEIGHT / 2 + 10, (WIDTH * 3 / 4) + (CARD_WIDTH/2) - 10, 10, 10, score_string, WHITE);
         free(score_string);
         return;
     }

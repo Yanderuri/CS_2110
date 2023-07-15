@@ -67,6 +67,14 @@ extern volatile unsigned short *videoBuffer;
 // macro to check if the button was pressed in the inputs.
 #define KEY_JUST_PRESSED(key, buttons, oldbuttons) (KEY_DOWN(key, buttons) && !KEY_DOWN(key, oldbuttons))
 
+
+
+#define SCORE_DRAW_HEIGHT (HEIGHT - CARD_HEIGHT/2 - 10)
+#define PLAYER_HAND_ROW (HEIGHT - CARD_HEIGHT/2)
+#define DEALER_HAND_ROW (0 - CARD_HEIGHT/2)
+
+
+
 // ---------------------------------------------------------------------------
 //                       DMA
 // ---------------------------------------------------------------------------
