@@ -98,14 +98,14 @@ void drawImageDMA(int row, int col, int width, int height, const u16 *image)
 {
   for (int r = 0; r < height; r++)
   {
-    if (row + r > HEIGHT)
-    {
-      break;
-    }
-    if (col + width > WIDTH || row + r < 0 || col + width < 0)
-    {
-      continue;
-    }
+    // if (row + r > HEIGHT)
+    // {
+    //   break;
+    // }
+    // if (col + width > WIDTH || row + r < 0 || col + width < 0)
+    // {
+    //   continue;
+    // }
     DMA[3].src = &image[OFFSET(r, 0, width)];
     DMA[3].dst = &videoBuffer[OFFSET(row + r, col, WIDTH)];
     DMA[3].cnt = width | DMA_ON | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT;
@@ -123,14 +123,14 @@ void undrawImageDMA(int row, int col, int width, int height, const u16 *image)
   volatile const u16 *limage = image;
   for (int r = 0; r < height; r++)
   {
-    if (row + r > HEIGHT)
-    {
-      break;
-    }
-    if (col + width > WIDTH || row + r < 0 || col + width < 0)
-    {
-      continue;
-    }
+    // if (row + r > HEIGHT)
+    // {
+    //   break;
+    // }
+    // if (col + width > WIDTH || row + r < 0 || col + width < 0)
+    // {
+    //   continue;
+    // }
     DMA[3].src = &limage[OFFSET(r, 0, width)];
     DMA[3].dst = &videoBuffer[OFFSET(row + r, col, WIDTH)];
     DMA[3].cnt = width | DMA_ON | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT;

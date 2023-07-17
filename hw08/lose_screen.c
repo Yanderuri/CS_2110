@@ -16,26 +16,43 @@ void draw_lose_screen(int score){
 
     waitForVBlank();
     waitForVBlank();
-    
-    draw_card_bounce(joker_white, PLAYER_HAND_ROW, 0, CARD_WIDTH, CARD_HEIGHT, 0);
-    draw_card_bounce(ace_clubs_white, PLAYER_HAND_ROW, 240 - CARD_WIDTH, CARD_WIDTH, CARD_HEIGHT, 1);
+
+    int currentVBlank = vBlankCounter;
+
+    while (vBlankCounter - currentVBlank < 960){
+        waitForVBlank();
+        draw_card_bounce(joker_white, HEIGHT - CARD_HEIGHT, 0, CARD_WIDTH, CARD_HEIGHT, 1);
+        waitForVBlank();
+        draw_card_bounce(joker_white, HEIGHT - CARD_HEIGHT, WIDTH - CARD_WIDTH, CARD_WIDTH, CARD_HEIGHT, -1);
+    }
     free(score_string);
     return;
 }
-// Draw an card bouncing back and forth on the lower half of the screen
+// Direction is either 1 or -1
 void draw_card_bounce(const unsigned short *image, int row, int col, int width, int height, int direction){
-    for(int i = 0; i < 240; i++){
-        waitForVBlank();
-        if(direction == 0){
-            drawImageDMA(row, col + i, width, height, image);
-        } else {
-            drawImageDMA(row, col - i, width, height, image);
+    int i = 0;
+    double sine_val = 0;
+    if (direction == 1){
+        i = 0;
+        while (i <= WIDTH - CARD_WIDTH){
+            sine_val = 20 * sine_taylor(i/10);
+            drawImageDMA(row + (int) (sine_val), col + i, width, height, image);
+            waitForVBlank();
+            drawRectDMA(row + (int) (sine_val), col + i, width, height, BLACK);
+            i++;
         }
-        waitForVBlank();
-        if(direction == 0){
-            undrawImageDMA(row, col - i, width, height, BLACK);
-        } else {
-            undrawImageDMA(row, col + i, width, height, BLACK);
-        }
+        drawRectDMA(row, WIDTH - CARD_WIDTH, CARD_WIDTH, CARD_HEIGHT, BLACK);
     }
+    else if (direction == -1){
+        i = 0;
+        while (i <= WIDTH - CARD_WIDTH){
+            sine_val = 20 * sine_taylor(i/10);
+            drawImageDMA(row + (int) (sine_val), col - i, width, height, image);
+            waitForVBlank();
+            drawRectDMA(row + (int) (sine_val), col - i, width, height, BLACK);
+            i++;
+        }
+        drawRectDMA(row, 0, CARD_WIDTH, CARD_HEIGHT, BLACK);
+    }
+    return;
 }

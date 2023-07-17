@@ -74,7 +74,7 @@ int main(void)
         if (count_score(hand) > 21)
         {
           state = LOSE;
-          delay(100);
+          delay(50);
           waitForVBlank();
           draw_lose_screen(score);
         }
@@ -90,7 +90,7 @@ int main(void)
           delay(10);
         }
         draw_dealer_hand(dealer_hand, count_score(dealer_hand), 1);
-        delay(100);
+        delay(50);
         if (count_score(dealer_hand) > 21)
         {
           state = WIN;
