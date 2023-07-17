@@ -13,7 +13,8 @@
         "support.h": "c",
         "start_screen.h": "c",
         "play_screen.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "lose_screen.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
