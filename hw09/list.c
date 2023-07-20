@@ -54,33 +54,60 @@ static User *create_user(char *name, UserType type, UserUnion data)
         free(user);
         return NULL;
     }
-    int len = strlen(name);
-    user->name = (char *) malloc(sizeof(char) * (len + 1));
-    if (user->name == NULL)
+    if (name != NULL)
     {
+        int len = strlen(name);
+        user->name = (char *)malloc(sizeof(char) * (len + 1));
+        if (user->name == NULL)
+        {
+            free(user->name);
+            free(user);
+            return NULL;
+        }
+        strncpy(user->name, name, len + 1);
+    }
+    else{
+        user->name = NULL;
+    }
+    user->type = type;
+    Student *to_be_added_stu = NULL;
+    Instructor *to_be_added_prof = NULL;
+
+    to_be_added_stu = (Student *)malloc(sizeof(Student));
+    if (to_be_added_stu == NULL)
+    {
+        free(to_be_added_stu);
         free(user->name);
         free(user);
         return NULL;
     }
-    strncpy(user->name, name, len + 1);
-    user->type = type;
+    to_be_added_prof = (Instructor *)malloc(sizeof(Instructor));
+    if (to_be_added_prof == NULL)
+    {
+        free(to_be_added_prof);
+        free(to_be_added_stu);
+        free(user->name);
+        free(user);
+        return NULL;
+    }
+    user->data.student = *to_be_added_stu;
+    user->data.instructor = *to_be_added_prof;
     if (type == STUDENT)
     {
-        if (create_student(data.student.num_classes, data.student.grades, &user->data.student) == 1)
+        if (create_student(data.student.num_classes, data.student.grades, to_be_added_stu) != 0)
         {
             free(user->name);
             free(user);
             return NULL;
         }
+        user->data.student = *to_be_added_stu;
+        return user;
     }
-    else if (type == INSTRUCTOR)
+    if (type == INSTRUCTOR)
     {
-        if (create_instructor(data.instructor.salary, &user->data.instructor) == 1)
-        {
-            free(user->name);
-            free(user);
-            return NULL;
-        }
+        create_instructor(data.instructor.salary, to_be_added_prof);
+        user->data.instructor = *to_be_added_prof;
+        return user;
     }
     return user;
 }
@@ -211,22 +238,30 @@ static int student_equal(const Student *student1, const Student *student2)
 static int user_equal(const User *user1, const User *user2)
 {
     if (user1 == NULL || user2 == NULL)
-        return 0;
-    if ((user1->name == NULL && user2->name == NULL)|| strcmp(user1->name, user2->name) != 0)
-        return 0;
-    if (user1->type != user2->type)
-        return 0;
-    if (user1->type == STUDENT)
     {
-        if (student_equal(&user1->data.student, &user2->data.student) == 0)
-            return 0;
+        return 0;
     }
-    else if (user1->type == INSTRUCTOR)
+    if (user1->type == STUDENT && user2->type == STUDENT)
     {
-        if (user1->data.instructor.salary != user2->data.instructor.salary)
-            return 0;
+        return student_equal(&user1->data.student, &user2->data.student);
     }
-    return 1;
+    if (((user1->name == NULL && user2->name == NULL) || (strcmp(user1->name, user2->name) == 0)) && (user1->type == user2->type))
+    {
+        if (user1->type == INSTRUCTOR)
+        {
+            if (user1->data.instructor.salary == user2->data.instructor.salary)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+
+    return 0;
 }
 
 /** create_list
@@ -382,8 +417,16 @@ int get(LinkedList *list, int index, User **dataOut)
         current = current->next;
         index--;
     }
-    *dataOut = current->data;
-    return 0;
+    if (index == 0)
+    {
+        *dataOut = current->data;
+        return 0;
+    }
+    else
+    {
+        *dataOut = NULL;
+        return 1;
+    }
 }
 
 /** contains
@@ -408,7 +451,11 @@ int get(LinkedList *list, int index, User **dataOut)
  */
 int contains(LinkedList *list, User *data, User **dataOut)
 {
-    if (list == NULL || dataOut == NULL || data == NULL || list->size == 0)
+    if (!dataOut)
+    {
+        return 0;
+    }
+    if (list == NULL || (list->size <= 0))
     {
         *dataOut = NULL;
         return 0;
@@ -424,6 +471,7 @@ int contains(LinkedList *list, User *data, User **dataOut)
         current = current->next;
     }
     *dataOut = NULL;
+    // dataOut = NULL;
     return 0;
 }
 
