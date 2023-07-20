@@ -69,42 +69,36 @@ static User *create_user(char *name, UserType type, UserUnion data)
     {
         user->name = NULL;
     }
-    Student *to_be_added_stu;
-    Instructor *to_be_added_prof;
+
     user->type = type;
 
-    to_be_added_stu = (Student *)malloc(sizeof(Student));
-    if (to_be_added_stu == NULL)
-    {
-        // free(to_be_added_stu);
-        // free(user->name);
-        free(user);
-        return NULL;
-    }
-    to_be_added_prof = (Instructor *)malloc(sizeof(Instructor));
-    if (to_be_added_prof == NULL)
-    {
-        // free(to_be_added_prof);
-        free(to_be_added_stu);
-        // free(user->name);
-        free(user);
-        return NULL;
-    }
     if (type == STUDENT)
     {
+        Student *to_be_added_stu;
+        to_be_added_stu = (Student *)malloc(sizeof(Student));
+        if (to_be_added_stu == NULL)
+        {
+            free(user);
+            return NULL;
+        }
         if (create_student(data.student.num_classes, data.student.grades, to_be_added_stu) != 0)
         {
-            free(to_be_added_prof);
             free(to_be_added_stu);
-            // free(user->name);
             free(user);
             return NULL;
         }
         user->data.student = *to_be_added_stu;
         return user;
     }
-    if (type == INSTRUCTOR)
+    else if (type == INSTRUCTOR)
     {
+        Instructor *to_be_added_prof;
+        to_be_added_prof = (Instructor *) malloc(sizeof(Instructor));
+        if (to_be_added_prof == NULL)
+        {
+            free(user);
+            return NULL;
+        }
         create_instructor(data.instructor.salary, to_be_added_prof);
         user->data.instructor = *to_be_added_prof;
         return user;
