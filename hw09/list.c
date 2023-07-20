@@ -60,43 +60,43 @@ static User *create_user(char *name, UserType type, UserUnion data)
         user->name = (char *)malloc(sizeof(char) * (len + 1));
         if (user->name == NULL)
         {
-            free(user->name);
             free(user);
             return NULL;
         }
         strncpy(user->name, name, len + 1);
     }
-    else{
+    else
+    {
         user->name = NULL;
     }
+    Student *to_be_added_stu;
+    Instructor *to_be_added_prof;
     user->type = type;
-    Student *to_be_added_stu = NULL;
-    Instructor *to_be_added_prof = NULL;
 
     to_be_added_stu = (Student *)malloc(sizeof(Student));
     if (to_be_added_stu == NULL)
     {
-        free(to_be_added_stu);
-        free(user->name);
+        // free(to_be_added_stu);
+        // free(user->name);
         free(user);
         return NULL;
     }
     to_be_added_prof = (Instructor *)malloc(sizeof(Instructor));
     if (to_be_added_prof == NULL)
     {
-        free(to_be_added_prof);
+        // free(to_be_added_prof);
         free(to_be_added_stu);
-        free(user->name);
+        // free(user->name);
         free(user);
         return NULL;
     }
-    user->data.student = *to_be_added_stu;
-    user->data.instructor = *to_be_added_prof;
     if (type == STUDENT)
     {
         if (create_student(data.student.num_classes, data.student.grades, to_be_added_stu) != 0)
         {
-            free(user->name);
+            free(to_be_added_prof);
+            free(to_be_added_stu);
+            // free(user->name);
             free(user);
             return NULL;
         }
@@ -166,21 +166,23 @@ static int create_instructor(double salary, Instructor *dataOut)
  * you should free the one you successfully malloc'd.
  *
  * @param the fields of the User struct
- * @return a Node
+ * @return a Node pointer
  */
 static Node *create_node(char *name, UserType type, UserUnion data)
 {
     Node *answer = NULL;
     if ((answer = (Node *)malloc(sizeof(Node))) == NULL)
     {
+        // free(answer->next);
         free(answer);
         return NULL;
     }
     User *user = create_user(name, type, data);
     if (user == NULL)
     {
+        // free(answer->next);
         free(answer);
-        free(user);
+        // free(user);
         return NULL;
     }
     answer->next = NULL;
@@ -278,7 +280,6 @@ LinkedList *create_list(void)
     LinkedList *list = NULL;
     if ((list = (LinkedList *)malloc(sizeof(LinkedList))) == NULL)
     {
-        free(list);
         return NULL;
     }
     list->size = 0;
@@ -312,6 +313,8 @@ int add_at_index(LinkedList *list, int index, char *name, UserType type, UserUni
     Node *new_node = create_node(name, type, data);
     if (new_node == NULL)
     {
+        // free(new_node->data->name);
+        // free(new_node->data);
         free(new_node);
         return 1;
     }
@@ -335,6 +338,8 @@ int add_at_index(LinkedList *list, int index, char *name, UserType type, UserUni
         {
             if (current == NULL)
             {
+                // free(new_node->data->name);
+                // free(new_node->data);
                 free(new_node);
                 return 1;
             }
@@ -371,6 +376,7 @@ int remove_at_index(LinkedList *list, User **dataOut, int index)
     {
         *dataOut = current->data;
         list->head = current->next;
+        current->next = NULL;
         free(current);
         list->size--;
         return 0;
@@ -388,6 +394,7 @@ int remove_at_index(LinkedList *list, User **dataOut, int index)
         Node *temp = current->next;
         *dataOut = temp->data;
         current->next = temp->next;
+        temp->next = NULL;
         free(temp);
         list->size--;
         return 0;
@@ -503,16 +510,16 @@ void empty_list(LinkedList *list)
         return;
     }
     Node *current = list->head;
-    while (current != NULL)
+    for (int i = 0; i < list->size; i++)
     {
         Node *temp = current;
         current = current->next;
-        free(temp->data->name);
-        if (temp->data->type == STUDENT)
-        {
-            free(temp->data->data.student.grades);
-        }
-        free(temp->data);
+        // free(temp->data->name);
+        // if (temp->data->type == STUDENT)
+        // {
+        //     free(temp->data->data.student.grades);
+        // }
+        // free(temp->data);
         free(temp);
     }
     list->head = NULL;
