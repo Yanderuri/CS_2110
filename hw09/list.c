@@ -57,7 +57,7 @@ static User *create_user(char *name, UserType type, UserUnion data)
     if (name != NULL)
     {
         int len = strlen(name);
-        user->name = (char *)malloc(sizeof(char) * (len + 1));
+        user->name = (char *) malloc(sizeof(char) * (len + 1));
         if (user->name == NULL)
         {
             free(user);
@@ -69,9 +69,7 @@ static User *create_user(char *name, UserType type, UserUnion data)
     {
         user->name = NULL;
     }
-
     user->type = type;
-
     if (type == STUDENT)
     {
         Student *to_be_added_stu;
