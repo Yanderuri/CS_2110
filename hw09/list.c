@@ -51,13 +51,12 @@ static User *create_user(char *name, UserType type, UserUnion data)
     User *user = (User *)malloc(sizeof(User));
     if (user == NULL)
     {
-        free(user);
         return NULL;
     }
     if (name != NULL)
     {
         int len = strlen(name);
-        user->name = (char *) malloc(sizeof(char) * (len + 1));
+        user->name = (char *)malloc(sizeof(char) * (len + 1));
         if (user->name == NULL)
         {
             free(user);
@@ -69,39 +68,39 @@ static User *create_user(char *name, UserType type, UserUnion data)
     {
         user->name = NULL;
     }
-    user->type = type;
     if (type == STUDENT)
     {
-        Student *to_be_added_stu;
-        to_be_added_stu = (Student *)malloc(sizeof(Student));
-        if (to_be_added_stu == NULL)
+        UserUnion *storage = (UserUnion *)malloc(sizeof(Student));
+        if (storage == NULL)
         {
             free(user);
             return NULL;
         }
-        if (create_student(data.student.num_classes, data.student.grades, to_be_added_stu) != 0)
+        user->type = type;
+        if (create_student(data.student.num_classes, data.student.grades, &storage->student) != 0)
         {
-            free(to_be_added_stu);
             free(user);
+            free(storage);
             return NULL;
         }
-        user->data.student = *to_be_added_stu;
+        user->data = *storage;
         return user;
     }
     else if (type == INSTRUCTOR)
     {
-        Instructor *to_be_added_prof;
-        to_be_added_prof = (Instructor *) malloc(sizeof(Instructor));
-        if (to_be_added_prof == NULL)
+        UserUnion *storage = (UserUnion *)malloc(sizeof(Student));
+        if (storage == NULL)
         {
             free(user);
             return NULL;
         }
-        create_instructor(data.instructor.salary, to_be_added_prof);
-        user->data.instructor = *to_be_added_prof;
+        create_instructor(data.instructor.salary, &storage->instructor);
+        user->type = type;
+        user->data = *storage;
         return user;
     }
-    return user;
+    free(user);
+    return NULL;
 }
 
 /** create_student
@@ -165,16 +164,12 @@ static Node *create_node(char *name, UserType type, UserUnion data)
     Node *answer = NULL;
     if ((answer = (Node *)malloc(sizeof(Node))) == NULL)
     {
-        // free(answer->next);
-        free(answer);
         return NULL;
     }
     User *user = create_user(name, type, data);
     if (user == NULL)
     {
-        // free(answer->next);
         free(answer);
-        // free(user);
         return NULL;
     }
     answer->next = NULL;
@@ -305,9 +300,6 @@ int add_at_index(LinkedList *list, int index, char *name, UserType type, UserUni
     Node *new_node = create_node(name, type, data);
     if (new_node == NULL)
     {
-        // free(new_node->data->name);
-        // free(new_node->data);
-        free(new_node);
         return 1;
     }
     if (list->size == 0 && list->head == NULL)
@@ -328,13 +320,6 @@ int add_at_index(LinkedList *list, int index, char *name, UserType type, UserUni
         Node *current = list->head;
         for (int i = 0; i < index - 1; i++)
         {
-            if (current == NULL)
-            {
-                // free(new_node->data->name);
-                // free(new_node->data);
-                free(new_node);
-                return 1;
-            }
             current = current->next;
         }
         new_node->next = current->next;
