@@ -51,6 +51,7 @@ static User *create_user(char *name, UserType type, UserUnion data)
     User *user = (User *)malloc(sizeof(User));
     if (user == NULL)
     {
+        free(user);
         return NULL;
     }
     if (name != NULL)
@@ -59,6 +60,7 @@ static User *create_user(char *name, UserType type, UserUnion data)
         user->name = (char *)malloc(sizeof(char) * (len + 1));
         if (user->name == NULL)
         {
+            free(user->name);
             free(user);
             return NULL;
         }
@@ -68,39 +70,47 @@ static User *create_user(char *name, UserType type, UserUnion data)
     {
         user->name = NULL;
     }
+    Student *to_be_added_stu;
+    Instructor *to_be_added_prof;
+    user->type = type;
+
+    to_be_added_stu = (Student *)malloc(sizeof(Student));
+    if (to_be_added_stu == NULL)
+    {
+        free(to_be_added_stu);
+        free(user->name);
+        free(user);
+        return NULL;
+    }
+    to_be_added_prof = (Instructor *)malloc(sizeof(Instructor));
+    if (to_be_added_prof == NULL)
+    {
+        free(to_be_added_prof);
+        free(to_be_added_stu);
+        free(user->name);
+        free(user);
+        return NULL;
+    }
     if (type == STUDENT)
     {
-        UserUnion *storage = (UserUnion *)malloc(sizeof(Student));
-        if (storage == NULL)
+        if (create_student(data.student.num_classes, data.student.grades, to_be_added_stu) != 0)
         {
+            free(to_be_added_prof);
+            free(to_be_added_stu);
+            free(user->name);
             free(user);
             return NULL;
         }
-        user->type = type;
-        if (create_student(data.student.num_classes, data.student.grades, &storage->student) != 0)
-        {
-            free(user);
-            free(storage);
-            return NULL;
-        }
-        user->data = *storage;
+        user->data.student = *to_be_added_stu;
         return user;
     }
-    else if (type == INSTRUCTOR)
+    if (type == INSTRUCTOR)
     {
-        UserUnion *storage = (UserUnion *)malloc(sizeof(Student));
-        if (storage == NULL)
-        {
-            free(user);
-            return NULL;
-        }
-        create_instructor(data.instructor.salary, &storage->instructor);
-        user->type = type;
-        user->data = *storage;
+        create_instructor(data.instructor.salary, to_be_added_prof);
+        user->data.instructor = *to_be_added_prof;
         return user;
     }
-    free(user);
-    return NULL;
+    return user;
 }
 
 /** create_student
@@ -164,12 +174,16 @@ static Node *create_node(char *name, UserType type, UserUnion data)
     Node *answer = NULL;
     if ((answer = (Node *)malloc(sizeof(Node))) == NULL)
     {
+        free(answer->next);
+        free(answer);
         return NULL;
     }
     User *user = create_user(name, type, data);
     if (user == NULL)
     {
+        free(answer->next);
         free(answer);
+        free(user);
         return NULL;
     }
     answer->next = NULL;
@@ -300,6 +314,9 @@ int add_at_index(LinkedList *list, int index, char *name, UserType type, UserUni
     Node *new_node = create_node(name, type, data);
     if (new_node == NULL)
     {
+        free(new_node->data->name);
+        free(new_node->data);
+        free(new_node);
         return 1;
     }
     if (list->size == 0 && list->head == NULL)
@@ -320,6 +337,13 @@ int add_at_index(LinkedList *list, int index, char *name, UserType type, UserUni
         Node *current = list->head;
         for (int i = 0; i < index - 1; i++)
         {
+            if (current == NULL)
+            {
+                free(new_node->data->name);
+                free(new_node->data);
+                free(new_node);
+                return 1;
+            }
             current = current->next;
         }
         new_node->next = current->next;
@@ -491,12 +515,12 @@ void empty_list(LinkedList *list)
     {
         Node *temp = current;
         current = current->next;
-        // free(temp->data->name);
-        // if (temp->data->type == STUDENT)
-        // {
-        //     free(temp->data->data.student.grades);
-        // }
-        // free(temp->data);
+        free(temp->data->name);
+        if (temp->data->type == STUDENT)
+        {
+            free(temp->data->data.student.grades);
+        }
+        free(temp->data);
         free(temp);
     }
     list->head = NULL;
