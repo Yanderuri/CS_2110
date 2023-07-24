@@ -5,19 +5,15 @@
  *
  * list.c: Complete the functions!
  */
-
 /**
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!-IMPORTANT-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * For any function that must use malloc, if malloc returns NULL, the function
  * itself should return NULL if needs to return something (or return 1 if
  * the function returns a int).
  */
-
 // Do not add ANY additional includes!!!
 #include "list.h"
-
 /* You should NOT have any global variables. */
-
 /* The create_node function is static because this is the only file that should
    have knowledge about the nodes backing the linked List. */
 static User *create_user(char *name, UserType type, UserUnion data);
@@ -25,7 +21,6 @@ static int create_student(int num_classes, double *grades, Student *dataOut); //
 static int create_instructor(double salary, Instructor *dataOut);             // completed for you
 static Node *create_node(char *name, UserType type, UserUnion data);
 static int user_equal(const User *user1, const User *user2);
-
 /** create_user
  *
  * Helper function that creates a User by allocating memory for it on the heap
@@ -48,61 +43,66 @@ static int user_equal(const User *user1, const User *user2);
  */
 static User *create_user(char *name, UserType type, UserUnion data)
 {
-    User *user = (User *)malloc(sizeof(User));
-    if (user == NULL)
+    User *newUser = (User *)malloc(sizeof(User));
+    if (newUser == NULL)
     {
         return NULL;
     }
-    if (name != NULL)
+    if (name == NULL)
     {
-        int len = strlen(name);
-        user->name = (char *)malloc(sizeof(char) * (len + 1));
-        if (user->name == NULL)
-        {
-            free(user);
-            return NULL;
-        }
-        strncpy(user->name, name, len + 1);
+        newUser->name = NULL;
     }
     else
     {
-        user->name = NULL;
+        int len = strlen(name);
+        newUser->name = malloc(sizeof(char) * (len + 1));
+        if (newUser->name == NULL)
+        {
+            free(newUser);
+            return NULL;
+        }
+        else
+        {
+            strncpy(newUser->name, name, len + 1);
+        }
     }
+    newUser->type = type;
     if (type == STUDENT)
     {
-        UserUnion *storage = (UserUnion *)malloc(sizeof(Student));
-        if (storage == NULL)
+        Student *stu = malloc(sizeof(Student));
+        if (stu == NULL)
         {
-            free(user);
+            free(newUser->name);
+            free(newUser);
             return NULL;
         }
-        user->type = type;
-        if (create_student(data.student.num_classes, data.student.grades, &storage->student) != 0)
+        if (create_student(data.student.num_classes, data.student.grades, stu) != 0)
         {
-            free(user);
-            free(storage);
+            free(stu);
+            free(newUser->name);
+            free(newUser);
             return NULL;
         }
-        user->data = *storage;
-        return user;
+        newUser->data.student = *stu;
+        free(stu);
+        return newUser;
     }
-    else if (type == INSTRUCTOR)
+    else
     {
-        UserUnion *storage = (UserUnion *)malloc(sizeof(Student));
-        if (storage == NULL)
+        Instructor *ins = malloc(sizeof(Instructor));
+        if (ins == NULL)
         {
-            free(user);
+            free(newUser->name);
+            free(newUser);
             return NULL;
         }
-        create_instructor(data.instructor.salary, &storage->instructor);
-        user->type = type;
-        user->data = *storage;
-        return user;
+        create_instructor(data.instructor.salary, ins);
+        newUser->data.instructor = *ins;
+        free(ins);
+        return newUser;
     }
-    free(user);
-    return NULL;
+    return newUser;
 }
-
 /** create_student
  *
  * Helper function that creates a Student and allocates memory for the grade array on the heap.
@@ -125,7 +125,6 @@ static int create_student(int num_classes, double *grades, Student *dataOut)
     }
     return 0;
 }
-
 /** create_instructor
  *
  * Helper function that creates an Instructor.
@@ -142,7 +141,6 @@ static int create_instructor(double salary, Instructor *dataOut)
     dataOut->salary = salary; // yes that's all this function does
     return 0;
 }
-
 /** create_node
  *
  * Helper function that creates a Node by allocating memory for it on the heap.
@@ -176,7 +174,6 @@ static Node *create_node(char *name, UserType type, UserUnion data)
     answer->data = user;
     return answer;
 }
-
 /** student_equal
  *
  * Helper function to compare two Student structs. You may find it ueful to call this helper
@@ -201,7 +198,6 @@ static int student_equal(const Student *student1, const Student *student2)
     }
     return 1;
 }
-
 /** user_equal
  * Helper function to help you compare two user structs.
  *
@@ -249,10 +245,8 @@ static int user_equal(const User *user1, const User *user2)
         }
         return 1;
     }
-
     return 0;
 }
-
 /** create_list
  *
  * Creates a LinkedList by allocating memory for it on the heap.
@@ -264,7 +258,7 @@ static int user_equal(const User *user1, const User *user2)
  */
 LinkedList *create_list(void)
 {
-    LinkedList *list = NULL;
+    LinkedList *list;
     if ((list = (LinkedList *)malloc(sizeof(LinkedList))) == NULL)
     {
         return NULL;
@@ -273,7 +267,6 @@ LinkedList *create_list(void)
     list->head = NULL;
     return list;
 }
-
 /** add_at_index
  *
  * Add the element at the specified index in the LinkedList. This index must lie in
@@ -300,6 +293,7 @@ int add_at_index(LinkedList *list, int index, char *name, UserType type, UserUni
     Node *new_node = create_node(name, type, data);
     if (new_node == NULL)
     {
+        free(new_node);
         return 1;
     }
     if (list->size == 0 && list->head == NULL)
@@ -320,6 +314,11 @@ int add_at_index(LinkedList *list, int index, char *name, UserType type, UserUni
         Node *current = list->head;
         for (int i = 0; i < index - 1; i++)
         {
+            if (current == NULL)
+            {
+                free(new_node);
+                return 1;
+            }
             current = current->next;
         }
         new_node->next = current->next;
@@ -328,7 +327,6 @@ int add_at_index(LinkedList *list, int index, char *name, UserType type, UserUni
         return 0;
     }
 }
-
 /** remove_at_index
  *
  * Remove the element at the specified index in the LinkedList.
@@ -344,8 +342,9 @@ int add_at_index(LinkedList *list, int index, char *name, UserType type, UserUni
  */
 int remove_at_index(LinkedList *list, User **dataOut, int index)
 {
-    if (list == NULL || list->size == 0 || index < 0 || index > list->size - 1 || dataOut == NULL)
+    if (list == NULL || list->size == 0 || index < 0 || index > list->size - 1 || dataOut == NULL || list->head == NULL)
     {
+        dataOut = NULL;
         return 1;
     }
     Node *current = list->head;
@@ -377,7 +376,6 @@ int remove_at_index(LinkedList *list, User **dataOut, int index)
         return 0;
     }
 }
-
 /** get
  *
  * Gets the data at the specified index in the LinkedList
@@ -393,6 +391,7 @@ int get(LinkedList *list, int index, User **dataOut)
 {
     if (list == NULL || index < 0 || index >= list->size || dataOut == NULL)
     {
+        dataOut = NULL;
         return 1;
     }
     Node *current = list->head;
@@ -412,7 +411,6 @@ int get(LinkedList *list, int index, User **dataOut)
         return 1;
     }
 }
-
 /** contains
  *
  * Traverses the LinkedList, trying to see if the LinkedList contains some
@@ -455,10 +453,8 @@ int contains(LinkedList *list, User *data, User **dataOut)
         current = current->next;
     }
     *dataOut = NULL;
-    // dataOut = NULL;
     return 0;
 }
-
 /** empty_list
  *
  * Empties the LinkedList. After this is called, the LinkedList should be
@@ -491,18 +487,17 @@ void empty_list(LinkedList *list)
     {
         Node *temp = current;
         current = current->next;
-        // free(temp->data->name);
-        // if (temp->data->type == STUDENT)
-        // {
-        //     free(temp->data->data.student.grades);
-        // }
-        // free(temp->data);
+        free(temp->data->name);
+        if (temp->data->type == STUDENT)
+        {
+            free(temp->data->data.student.grades);
+        }
+        free(temp->data);
         free(temp);
     }
     list->head = NULL;
     list->size = 0;
 }
-
 /** get_average_salary
  *
  * Traverses the LinkedList, computing the average of all instructor salaries.
