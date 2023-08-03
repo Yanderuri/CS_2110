@@ -155,7 +155,6 @@ FACTORIAL ;; Do not change this label! Treat this as like the name of the functi
     LDR R4, R6, #4
     
     ADD R6, R5, #0
-
     LDR R5, R6, #1
     LDR R7, R6, #2
     ADD R6, R6, #3
